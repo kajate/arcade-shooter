@@ -14,14 +14,20 @@ var star = {
     y: Math.floor(Math.random() * 650) + 50
 };
 
+// var randVX = Math.floor(Math.random() * -100) + -50;
+// var randVY = Math.floor(Math.random() * 5) + -5;
+// var randAngV = Math.floor(Math.random() * 5) + 1;
+// var randDSize = Math.floor(Math.random() * 200) + 10;
+// var randRot = Math.floor(Math.random() * 100) + -100;
+
 var meteroid = {
-    x: 1200,
-    y: 400,
-    // dSize: (100, 100),
-    vx: 20,
-    vy: 20,
-    r: 20,
-    angv: 5
+    x: 900,
+    y: 250
+    // DSize: (randDSize, randDSize),
+    // VX: randVX,
+    // VY: randVY,
+    // R: randRot,
+    // AngV: randAngV
 };
 
 var scores = {
@@ -44,7 +50,7 @@ io.on("connection", function(socket) {
         x: 50,
         y: Math.floor(Math.random() * 500) + 50,
         playerId: socket.id,
-        team: Math.floor(Math.random() * 2) == 0 ? "blue" : "red"
+        team: Math.floor(Math.random() * 2) == 0 ? "red" : "blue"
     };
 
     // send the players object to the new player
@@ -83,10 +89,10 @@ io.on("connection", function(socket) {
     });
 
     socket.on("starCollected", function() {
-        if (players[socket.id].team === "red") {
-            scores.red += 10;
-        } else {
+        if (players[socket.id].team === "blue") {
             scores.blue += 10;
+        } else {
+            scores.red += 10;
         }
         star.x = Math.floor(Math.random() * 1000) + 950;
         star.y = Math.floor(Math.random() * 650) + 50;
@@ -100,26 +106,24 @@ io.on("connection", function(socket) {
         io.emit("starLocation", star); //random number here for the new location of the star
     });
 
-    socket.on("meteroidReset", function() {
-        meteroid.x = Math.floor(Math.random() * 1000) + 950;
-        meteroid.y = Math.floor(Math.random() * 650) + 50;
-        if (meteroid <= 10) {
-            io.emit("meteroidLocation", meteroid);
-        } //random number here for the new location of the star
-    });
-
     socket.on("meteroidCollision", function() {
-        if (players[socket.id] === "blue") {
-            scores.red -= 1;
-        } else {
+        if (players[socket.id].team === "blue") {
             scores.blue -= 1;
+        } else {
+            scores.red -= 1;
         }
         meteroid.x = Math.floor(Math.random() * 1000) + 950;
         meteroid.y = Math.floor(Math.random() * 650) + 50;
         if (meteroid <= 10) {
-            io.emit("meteroidLocation", meteroid);
-        } //random number here for the new location of the star
+            io.emit("meteroidData", meteroid);
+        }
         io.emit("scoreUpdate", scores);
+    });
+
+    socket.on("meteroidReset", function() {
+        meteroid.x = Math.floor(Math.random() * 1000) + 950;
+        meteroid.y = Math.floor(Math.random() * 650) + 50;
+        io.emit("meteroidLocation", meteroid); //random number here for the new location of the star
     });
 });
 

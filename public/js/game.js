@@ -85,7 +85,7 @@ function create() {
         .setScale(8);
 
     this.catcher = this.physics.add.staticGroup();
-    this.catcher.create(0, 0, "catcher");
+    this.catcher.create(0, 410, "catcher");
 
     // var particles = this.add.particles("spark");
     //
@@ -199,20 +199,13 @@ function create() {
         );
     });
 
-    this.socket.on("meteroidLocation", function(meteroidLocation) {
-        var rand = Math.floor(Math.random() * -100) + -50;
-        var randTwo = Math.floor(Math.random() * 5) + 1;
-        var dSize = Math.floor(Math.random() * 200) + 10;
-        var randThree = Math.floor(Math.random() * 100) + -100;
-
-        // if (self.meteroid) self.meteroid.destroy();
+    this.socket.on("meteroidLocation", function(meteroidData) {
+        if (self.meteroid) self.meteroid.destroy();
+        var randScale = Math.floor(Math.random() * 5) + 1;
         self.meteroid = self.physics.add
-            .image(meteroidLocation.x, meteroidLocation.y, "meteroid")
+            .image(meteroidData.x, meteroidData.y, "meteroid")
             .setDisplaySize(64, 64)
-            .setVelocityX(rand)
-            .setVelocityY(0)
-            .setRotation(20)
-            .setAngularVelocity(5);
+            .setVelocityX(-500);
         self.physics.add.overlap(
             self.catcher,
             self.meteroid,
@@ -233,6 +226,36 @@ function create() {
             self
         );
     });
+
+    // this.socket.on("meteroidLocation", function(meteroidLocation) {
+    //     // var rand = Math.floor(Math.random() * -100) + -50;
+    //     // var randTwo = Math.floor(Math.random() * 5) + 1;
+    //     // var dSize = Math.floor(Math.random() * 200) + 10;
+    //     // var randThree = Math.floor(Math.random() * 100) + -100;
+    //     // if (self.meteroid) self.meteroid.destroy();
+    //     self.meteroid = self.physics.add
+    //         .image(meteroidLocation.x, meteroidLocation.y, "meteroid")
+    //         .setDisplaySize(meteriodLocation.mDSize, 64);
+    //     self.physics.add.overlap(
+    //         self.catcher,
+    //         self.meteroid,
+    //         function() {
+    //             console.log("catcher collision");
+    //             this.socket.emit("meteroidReset");
+    //         },
+    //         null,
+    //         self
+    //     );
+    //     self.physics.add.overlap(
+    //         self.ship,
+    //         self.meteroid,
+    //         function() {
+    //             this.socket.emit("meteroidCollision");
+    //         },
+    //         null,
+    //         self
+    //     );
+    // });
 
     this.cursors = this.input.keyboard.createCursorKeys();
     // this.firebutton = this.input.keyboard.addKey(
@@ -435,6 +458,11 @@ function addPlayer(self, playerInfo) {
         .image(playerInfo.x, playerInfo.y, "ship")
         .setOrigin(0.5, 0.5)
         .setDisplaySize(64, 64);
+    if (playerInfo.team === "blue") {
+        self.ship.setTint(0x0000ff);
+    } else {
+        self.ship.setTint(0xff0000);
+    }
     self.ship.setDrag(00);
     self.ship.setAngularDrag(00);
     self.ship.setMaxVelocity(600);
@@ -445,11 +473,11 @@ function addOtherPlayers(self, playerInfo) {
         .sprite(playerInfo.x, playerInfo.y, "otherPlayer")
         .setOrigin(0.5, 0.5)
         .setDisplaySize(64, 64);
-    // if (playerInfo.team === "blue") {
-    //     otherPlayer.setTint(0xffffff);
-    // } else {
-    //     otherPlayer.setTint(0xffffff);
-    // }
+    if (playerInfo.team === "blue") {
+        otherPlayer.setTint(0x0000ff);
+    } else {
+        otherPlayer.setTint(0xff0000);
+    }
     otherPlayer.playerId = playerInfo.playerId;
     self.otherPlayers.add(otherPlayer);
 }
