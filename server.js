@@ -15,8 +15,13 @@ var star = {
 };
 
 var meteroid = {
-    x: Math.floor(Math.random() * 1200) + 950,
-    y: Math.floor(Math.random() * 650) + 50
+    x: 1200,
+    y: 400,
+    // dSize: (100, 100),
+    vx: 20,
+    vy: 20,
+    r: 20,
+    angv: 5
 };
 
 var scores = {
@@ -78,10 +83,10 @@ io.on("connection", function(socket) {
     });
 
     socket.on("starCollected", function() {
-        if (players[socket.id]) {
+        if (players[socket.id].team === "red") {
             scores.red += 10;
         } else {
-            scores.blue += 0;
+            scores.blue += 10;
         }
         star.x = Math.floor(Math.random() * 1000) + 950;
         star.y = Math.floor(Math.random() * 650) + 50;
@@ -104,11 +109,11 @@ io.on("connection", function(socket) {
     });
 
     socket.on("meteroidCollision", function() {
-        // if (players[socket.id]) {
-        scores.red -= 1;
-        // } else if (hiddenPlayer) {
-        // scores.blue -= 1;
-        // }
+        if (players[socket.id] === "blue") {
+            scores.red -= 1;
+        } else {
+            scores.blue -= 1;
+        }
         meteroid.x = Math.floor(Math.random() * 1000) + 950;
         meteroid.y = Math.floor(Math.random() * 650) + 50;
         if (meteroid <= 10) {

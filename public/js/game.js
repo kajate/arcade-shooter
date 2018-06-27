@@ -202,18 +202,17 @@ function create() {
     this.socket.on("meteroidLocation", function(meteroidLocation) {
         var rand = Math.floor(Math.random() * -100) + -50;
         var randTwo = Math.floor(Math.random() * 5) + 1;
-        var randSize = Math.floor(Math.random() * 200) + 10;
+        var dSize = Math.floor(Math.random() * 200) + 10;
         var randThree = Math.floor(Math.random() * 100) + -100;
 
         // if (self.meteroid) self.meteroid.destroy();
         self.meteroid = self.physics.add
             .image(meteroidLocation.x, meteroidLocation.y, "meteroid")
-            .setDisplaySize(randSize, randSize)
+            .setDisplaySize(64, 64)
             .setVelocityX(rand)
-            // .setScale(randTwo)
+            .setVelocityY(0)
             .setRotation(20)
-            .setAngularVelocity(5)
-            .setVelocityY(0);
+            .setAngularVelocity(5);
         self.physics.add.overlap(
             self.catcher,
             self.meteroid,
@@ -242,10 +241,10 @@ function create() {
 }
 
 function update() {
-    // this.backgroundZero.tilePositionX += 0.0001;
-    // this.backgroundOne.tilePositionX += 0.05;
-    // this.backgroundTwo.tilePositionX += 0.1;
-    // this.backgroundThree.tilePositionX += 2.5;
+    this.backgroundZero.tilePositionX += 0.0001;
+    this.backgroundOne.tilePositionX += 0.05;
+    this.backgroundTwo.tilePositionX += 0.1;
+    this.backgroundThree.tilePositionX += 2.5;
 
     if (this.ship) {
         // player movement
@@ -256,8 +255,8 @@ function update() {
         if (this.ship.x < 10) {
             this.ship.x = 10;
             this.ship.body.acceleration.x = 0;
-        } else if (this.ship.x > 620) {
-            this.ship.x = 620;
+        } else if (this.ship.x > 920) {
+            this.ship.x = 920;
             this.ship.body.acceleration.x = 0;
         } else if (this.ship.y < 10) {
             this.ship.y = 10;
