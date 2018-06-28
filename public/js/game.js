@@ -24,7 +24,7 @@ function preload() {
         console.log(value);
         progressBar.clear();
         progressBar.fillStyle(0xffffff, 1);
-        progressBar.fillRect(250, 280, 300 * value, 30);
+        progressBar.fillRect(500, 360, 300 * value, 30);
     });
 
     this.load.on("fileprogress", function(file) {
@@ -40,7 +40,7 @@ function preload() {
     var progressBar = this.add.graphics();
     var progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(240, 270, 320, 50);
+    progressBox.fillRect(490, 350, 320, 50);
 
     //   this.load.image('logo', 'zenvalogo.png');
     // for (var i = 0; i < 500; i++) {
@@ -52,11 +52,15 @@ function preload() {
 
     this.load.image("meteroid", "assets/meteroid.png");
     this.load.image("meteroidTwo", "assets/meteroidtwo.png");
+    this.load.image("meteroidThree", "assets/meteroidthree.png");
 
-    this.load.image("star", "assets/star_gold.png");
+    this.load.image("star", "assets/emoji/tearsofjoy.png");
     this.load.image("aubergine", "assets/emoji/aubergine.png");
     this.load.image("poop", "assets/emoji/poop.png");
     this.load.image("tesla", "assets/emoji/tesla.png");
+    this.load.image("pizza", "assets/emoji/pizza.png");
+    this.load.image("peach", "assets/emoji/peach.png");
+    this.load.image("alien", "assets/emoji/alien.png");
 
     this.load.image("earth", "assets/backgrounds/earth.jpg");
     this.load.image("bgtile", "assets/backgrounds/starsbig.png");
@@ -178,7 +182,8 @@ function create() {
             .setRotation(starLocation.r)
             .setAngularVelocity(starLocation.angv)
             .setDisplaySize(54, 54)
-            .setVelocityX(-500);
+            .setVelocityX(starLocation.vx)
+            .setVelocityY(starLocation.vy);
         self.physics.add.overlap(
             self.catcher,
             self.star,
@@ -290,12 +295,73 @@ function create() {
         );
     });
 
+    this.socket.on("pizzaData", function(pizzaData) {
+        if (self.pizza) self.pizza.destroy();
+        self.pizza = self.physics.add
+            .image(pizzaData.x, pizzaData.y, "pizza")
+            .setDisplaySize(64, 64)
+            .setVelocityX(pizzaData.vx)
+            .setVelocityY(pizzaData.vy)
+            .setRotation(pizzaData.r)
+            .setAngularVelocity(pizzaData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.pizza,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("pizzaMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.pizza,
+            function() {
+                this.socket.emit("pizzaCollected");
+            },
+            null,
+            self
+        );
+    });
+
+    this.socket.on("peachData", function(peachData) {
+        if (self.peach) self.peach.destroy();
+        self.peach = self.physics.add
+            .image(peachData.x, peachData.y, "peach")
+            .setDisplaySize(64, 64)
+            .setVelocityX(peachData.vx)
+            .setVelocityY(peachData.vy)
+            .setRotation(peachData.r)
+            .setAngularVelocity(peachData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.peach,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("peachMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.peach,
+            function() {
+                this.socket.emit("peachCollected");
+            },
+            null,
+            self
+        );
+    });
+
     this.socket.on("meteroidLocation", function(meteroidData) {
         if (self.meteroid) self.meteroid.destroy();
         var randScale = Math.floor(Math.random() * 5) + 1;
         self.meteroid = self.physics.add
             .image(meteroidData.x, meteroidData.y, "meteroid")
-            .setScale(meteroidData.dscale)
+            // .setScale(meteroidData.dscale)
+            .setDisplaySize(meteroidData.dw, meteroidData.dh)
             .setVelocityX(meteroidData.vx)
             .setVelocityY(meteroidData.vy)
             .setRotation(meteroidData.r)
@@ -319,13 +385,15 @@ function create() {
             null,
             self
         );
+        // self.physics.add.collider(self.meteroid, self.meteroidTwo);
     });
 
     this.socket.on("meteroidTwoLocation", function(meteroidTwoData) {
         if (self.meteroidTwo) self.meteroidTwo.destroy();
         self.meteroidTwo = self.physics.add
             .image(meteroidTwoData.x, meteroidTwoData.y, "meteroidTwo")
-            .setScale(meteroidTwoData.dscale)
+            // .setScale(meteroidTwoData.dscale)
+            .setDisplaySize(meteroidTwoData.dw, meteroidTwoData.dh)
             .setVelocityX(meteroidTwoData.vx)
             .setVelocityY(meteroidTwoData.vy)
             .setRotation(meteroidTwoData.r)
@@ -345,6 +413,37 @@ function create() {
             self.meteroidTwo,
             function() {
                 this.socket.emit("meteroidTwoCollision");
+            },
+            null,
+            self
+        );
+    });
+
+    this.socket.on("meteroidThreeLocation", function(meteroidThreeData) {
+        if (self.meteroidThree) self.meteroidThree.destroy();
+        self.meteroidThree = self.physics.add
+            .image(meteroidThreeData.x, meteroidThreeData.y, "meteroidThree")
+            // .setScale(meteroidThreeData.dscale)
+            .setDisplaySize(meteroidThreeData.dw, meteroidThreeData.dh)
+            .setVelocityX(meteroidThreeData.vx)
+            .setVelocityY(meteroidThreeData.vy)
+            .setRotation(meteroidThreeData.r)
+            .setAngularVelocity(meteroidThreeData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.meteroidThree,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("meteroidThreeReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.meteroidThree,
+            function() {
+                this.socket.emit("meteroidThreeCollision");
             },
             null,
             self
@@ -372,8 +471,8 @@ function update() {
         if (this.ship.x < 10) {
             this.ship.x = 10;
             this.ship.body.acceleration.x = 0;
-        } else if (this.ship.x > 920) {
-            this.ship.x = 920;
+        } else if (this.ship.x > 1280) {
+            this.ship.x = 1280;
             this.ship.body.acceleration.x = 0;
         } else if (this.ship.y < 10) {
             this.ship.y = 10;
@@ -408,19 +507,19 @@ function update() {
             this.ship.setAcceleration(100);
             this.backgroundOne.tilePositionX += 0.2;
             this.backgroundTwo.tilePositionX += 0.2;
-            this.backgroundThree.tilePositionX += 3.5;
+            this.backgroundThree.tilePositionX += 2.5;
         } else {
             this.ship.setVelocityX(0);
         }
 
         if (this.cursors.up.isDown) {
             this.ship.setVelocityY(-470);
-            this.backgroundTwo.tilePositionY += -0.01;
-            this.backgroundThree.tilePositionY += -0.5;
+            this.backgroundTwo.tilePositionY += -0.02;
+            this.backgroundThree.tilePositionY += -0.2;
         } else if (this.cursors.down.isDown) {
             this.ship.setVelocityY(470);
-            this.backgroundTwo.tilePositionY += 0.01;
-            this.backgroundThree.tilePositionY += 0.5;
+            this.backgroundTwo.tilePositionY += 0.02;
+            this.backgroundThree.tilePositionY += 0.2;
         } else {
             this.ship.setVelocityY(0);
         }
@@ -429,26 +528,26 @@ function update() {
 
 function addPlayer(self, playerInfo) {
     self.ship = self.physics.add
-        .image(playerInfo.x, playerInfo.y, "ship")
+        .sprite(playerInfo.x, playerInfo.y, "ship")
         .setOrigin(0.5, 0.5)
         .setDisplaySize(44, 44);
     if (playerInfo.team === "blue") {
-        self.ship.setTint(0x0000ff);
+        self.ship.setTint(0x7ccdff);
     } else {
-        self.ship.setTint(0xff0000);
+        self.ship.setTint(0xff8ef0);
     }
     self.ship.setMaxVelocity(600);
 }
 
 function addOtherPlayers(self, playerInfo) {
     const otherPlayer = self.add
-        .image(playerInfo.x, playerInfo.y, "otherPlayer")
+        .sprite(playerInfo.x, playerInfo.y, "otherPlayer")
         .setOrigin(0.5, 0.5)
         .setDisplaySize(44, 44);
     if (playerInfo.team === "blue") {
-        otherPlayer.setTint(0x0000ff);
+        otherPlayer.setTint(0x7ccdff);
     } else {
-        otherPlayer.setTint(0xff0000);
+        otherPlayer.setTint(0xff8ef0);
     }
     otherPlayer.playerId = playerInfo.playerId;
     self.otherPlayers.add(otherPlayer);
