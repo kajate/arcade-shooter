@@ -8,7 +8,7 @@ var players = {};
 //I will, in the means of time, get rid of all this repetetiveteteive code.
 
 var star = {
-    x: Math.floor(Math.random() * 2000) + 1250,
+    x: Math.floor(Math.random() * 2000) + 1450,
     y: Math.floor(Math.random() * 650) + 50,
     r: Math.floor(Math.random() * 50) + -50,
     vx: Math.floor(Math.random() * -600) + -300,
@@ -25,7 +25,7 @@ var aubergine = {
     x: Math.floor(Math.random() * 4000) + 3000,
     y: Math.floor(Math.random() * 650) + 50,
     vx: Math.floor(Math.random() * -500) + -30,
-    vy: Math.floor(Math.random() * -2) + 2,
+    vy: Math.floor(Math.random() * -10) + 10,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 145) + 115
 };
@@ -34,7 +34,7 @@ var poop = {
     x: Math.floor(Math.random() * 2500) + 2050,
     y: Math.floor(Math.random() * 650) + 250,
     vx: Math.floor(Math.random() * -80) + -40,
-    vy: Math.floor(Math.random() * -40) + 40,
+    vy: Math.floor(Math.random() * -50) + 50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 145) + 15
 };
@@ -61,7 +61,7 @@ var peach = {
     x: Math.floor(Math.random() * 4000) + 3000,
     y: Math.floor(Math.random() * 650) + 50,
     vx: Math.floor(Math.random() * -500) + -30,
-    vy: Math.floor(Math.random() * -2) + 2,
+    vy: Math.floor(Math.random() * -50) + 50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 145) + 115
 };
@@ -184,7 +184,7 @@ io.on("connection", function(socket) {
         star.vx = Math.floor(Math.random() * -600) + -200;
         star.vy = Math.floor(Math.random() * -200) + 200;
         star.r = Math.floor(Math.random() * 50) + -50;
-        star.x = Math.floor(Math.random() * 2500) + 1750;
+        star.x = Math.floor(Math.random() * 2000) + 1450;
         star.y = Math.floor(Math.random() * 650) + 50;
         io.emit("starLocation", star); //random number here for the new location of the star
         io.emit("scoreUpdate", scores);
@@ -195,7 +195,7 @@ io.on("connection", function(socket) {
         star.vx = Math.floor(Math.random() * -600) + -200;
         star.vy = Math.floor(Math.random() * -200) + 200;
         star.r = Math.floor(Math.random() * 50) + -50;
-        star.x = Math.floor(Math.random() * 2500) + 1750;
+        star.x = Math.floor(Math.random() * 2000) + 1450;
         star.y = Math.floor(Math.random() * 650) + 50;
         io.emit("starLocation", star); //random number here for the new location of the star
     });
@@ -208,7 +208,7 @@ io.on("connection", function(socket) {
         }
         aubergine.r = Math.floor(Math.random() * 50) + -50;
         aubergine.vx = Math.floor(Math.random() * -200) + -100;
-        aubergine.vy = Math.floor(Math.random() * -20) + 20;
+        aubergine.vy = Math.floor(Math.random() * -50) + 50;
         aubergine.x = Math.floor(Math.random() * 2200) + 2550;
         aubergine.y = Math.floor(Math.random() * 650) + 50;
         aubergine.angv = Math.floor(Math.random() * 145) + 115;
@@ -219,7 +219,7 @@ io.on("connection", function(socket) {
     socket.on("aubergineMissedAndReset", function() {
         aubergine.r = Math.floor(Math.random() * 50) + -50;
         aubergine.vx = Math.floor(Math.random() * -200) + -100;
-        aubergine.vy = Math.floor(Math.random() * -20) + 20;
+        aubergine.vy = Math.floor(Math.random() * -50) + 50;
         aubergine.x = Math.floor(Math.random() * 2200) + 2550;
         aubergine.y = Math.floor(Math.random() * 650) + 50;
         aubergine.angv = Math.floor(Math.random() * 145) + 115;
@@ -312,7 +312,7 @@ io.on("connection", function(socket) {
         }
         peach.r = Math.floor(Math.random() * 50) + -50;
         peach.vx = Math.floor(Math.random() * -200) + -100;
-        peach.vy = Math.floor(Math.random() * -20) + 20;
+        peach.vy = Math.floor(Math.random() * -50) + 50;
         peach.x = Math.floor(Math.random() * 2200) + 2550;
         peach.y = Math.floor(Math.random() * 650) + 50;
         peach.angv = Math.floor(Math.random() * 145) + 115;
@@ -323,7 +323,7 @@ io.on("connection", function(socket) {
     socket.on("peachMissedAndReset", function() {
         peach.r = Math.floor(Math.random() * 50) + -50;
         peach.vx = Math.floor(Math.random() * -200) + -100;
-        peach.vy = Math.floor(Math.random() * -20) + 20;
+        peach.vy = Math.floor(Math.random() * -50) + 50;
         peach.x = Math.floor(Math.random() * 2200) + 2550;
         peach.y = Math.floor(Math.random() * 650) + 50;
         peach.angv = Math.floor(Math.random() * 145) + 115;

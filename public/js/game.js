@@ -457,11 +457,11 @@ function create() {
 }
 
 function update() {
-    this.backgroundEarth.tilePositionX += 0.18;
+    this.backgroundEarth.tilePositionX += 0.13;
     this.backgroundZero.tilePositionX += 0.08;
     this.backgroundOne.tilePositionX += 0.05;
     this.backgroundTwo.tilePositionX += 0.18;
-    this.backgroundThree.tilePositionX += 2.5;
+    this.backgroundThree.tilePositionX += 4.5;
 
     if (this.ship) {
         // player movement
@@ -506,9 +506,9 @@ function update() {
         } else if (this.cursors.right.isDown) {
             this.ship.setVelocityX(500);
             this.ship.setAcceleration(100);
-            this.backgroundOne.tilePositionX += 0.2;
-            this.backgroundTwo.tilePositionX += 0.2;
-            this.backgroundThree.tilePositionX += 2.5;
+            this.backgroundOne.tilePositionX += 0.15;
+            this.backgroundTwo.tilePositionX += 0.25;
+            this.backgroundThree.tilePositionX += 3.5;
         } else {
             this.ship.setVelocityX(0);
         }
