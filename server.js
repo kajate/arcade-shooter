@@ -234,7 +234,7 @@ io.on("connection", function(socket) {
         }
         poop.x = Math.floor(Math.random() * 3200) + 2050;
         poop.y = Math.floor(Math.random() * 650) + 250;
-        poop.vx = Math.floor(Math.random() * -80) + -40;
+        poop.vx = Math.floor(Math.random() * -150) + -40;
         poop.vy = Math.floor(Math.random() * -10) + 10;
         poop.r = Math.floor(Math.random() * 50) + -50;
         poop.angv = Math.floor(Math.random() * 15) + 5;
@@ -245,7 +245,7 @@ io.on("connection", function(socket) {
     socket.on("poopMissedAndReset", function() {
         poop.x = Math.floor(Math.random() * 3200) + 2050;
         poop.y = Math.floor(Math.random() * 650) + 250;
-        poop.vx = Math.floor(Math.random() * -80) + -40;
+        poop.vx = Math.floor(Math.random() * -150) + -40;
         poop.vy = Math.floor(Math.random() * -10) + 10;
         poop.r = Math.floor(Math.random() * 50) + -50;
         poop.angv = Math.floor(Math.random() * 15) + 5;

@@ -79,9 +79,9 @@ function preload() {
 // var lasers;
 
 function create() {
-    // this.backgroundEarth = this.add
-    //     .tileSprite(800, 300, 1960, 1600, "earth")
-    //     .setScale(0.2);
+    this.backgroundEarth = this.add
+        .tileSprite(900, 200, 1960, 1600, "earth")
+        .setScale(0.2);
     this.backgroundZero = this.add
         .tileSprite(400, 300, 3780, 1820, "bgtile")
         .setScale(0.5);
@@ -457,9 +457,10 @@ function create() {
 }
 
 function update() {
-    this.backgroundZero.tilePositionX += 0.001;
-    this.backgroundOne.tilePositionX += 0.15;
-    this.backgroundTwo.tilePositionX += 0.3;
+    this.backgroundEarth.tilePositionX += 0.18;
+    this.backgroundZero.tilePositionX += 0.08;
+    this.backgroundOne.tilePositionX += 0.05;
+    this.backgroundTwo.tilePositionX += 0.18;
     this.backgroundThree.tilePositionX += 2.5;
 
     if (this.ship) {
