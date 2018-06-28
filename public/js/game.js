@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
     parent: "phaser-example",
-    width: 1080,
+    width: 1280,
     height: 720,
     physics: {
         default: "arcade",
@@ -20,8 +20,6 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload() {
-    this.cursors = this.input.keyboard.createCursorKeys();
-
     this.load.on("progress", function(value) {
         console.log(value);
         progressBar.clear();
@@ -49,17 +47,22 @@ function preload() {
     //     this.load.image('logo'+i, 'zenvalogo.png');
     // }
 
-    this.load.image("spark", "assets/particles.png");
     this.load.image("ship", "assets/ships/whitelines.png");
-    this.load.image("catcher", "assets/line.png");
     this.load.image("otherPlayer", "assets/ships/whitefull.png");
+
     this.load.image("meteroid", "assets/meteroid.png");
     this.load.image("meteroidTwo", "assets/meteroidtwo.png");
+
     this.load.image("star", "assets/star_gold.png");
     this.load.image("aubergine", "assets/emoji/aubergine.png");
+    this.load.image("poop", "assets/emoji/poop.png");
+    this.load.image("tesla", "assets/emoji/tesla.png");
+
+    this.load.image("earth", "assets/backgrounds/earth.jpg");
     this.load.image("bgtile", "assets/backgrounds/starsbig.png");
     this.load.image("bgtileTwo", "assets/backgrounds/starsbig.png");
-    this.load.image("laser", "assets/bullet.png");
+
+    this.load.image("catcher", "assets/line.png");
 }
 
 // var bullets;
@@ -72,29 +75,34 @@ function preload() {
 // var lasers;
 
 function create() {
+    // this.backgroundEarth = this.add
+    //     .tileSprite(800, 300, 1960, 1600, "earth")
+    //     .setScale(0.2);
     this.backgroundZero = this.add
-        .tileSprite(400, 300, 280, 720, "bgtile")
+        .tileSprite(400, 300, 3780, 1820, "bgtile")
         .setScale(0.5);
     this.backgroundOne = this.add
-        .tileSprite(400, 300, 1280, 720, "bgtile")
+        .tileSprite(800, 300, 1580, 720, "bgtile")
         .setScale(1);
     this.backgroundTwo = this.add
-        .tileSprite(800, 300, 1280, 720, "bgtileTwo")
+        .tileSprite(800, 300, 580, 720, "bgtileTwo")
         .setScale(2);
     this.backgroundThree = this.add
         .tileSprite(1000, 300, 1280, 720, "bgtileTwo")
         .setScale(8);
 
     this.catcher = this.physics.add.staticGroup();
-    this.catcher
-        .create(520, -750, "catcher")
-        .setScale(10.5)
-        .setRotation(1);
-    this.catcher
-        .create(520, 1550, "catcher")
-        .setScale(10.5)
-        .setRotation(-1);
-    this.catcher.create(-1280, 360, "catcher").setScale(10.5);
+    this.catcher.create(-2380, 360, "catcher");
+
+    // this.bullets = this.add.group();
+    // this.bullets.enableBody = true;
+    // this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    //
+    // this.bullets.createMultiple(40, "bullet");
+    // this.bullets.setAll("anchor.x", 0.5);
+    // this.bullets.setAll("anchor.y", 0.5);
+
+    // this.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
     // var particles = this.add.particles("spark");
     //
@@ -104,12 +112,6 @@ function create() {
     // emitter.setSpeed(200);
     // // emitter.setVelocityX(-50);
     // emitter.setBlendMode(Phaser.BlendModes.ADD);
-    // bullets = this.add.group();
-    // bullets.enableBody = true;
-    //
-    // bullets.createMultiple(50, "bullet");
-    // this.setAll("checkWorldBounds", true);
-    // this.setAll("outOfBoundsKill", true);
 
     window.addEventListener("resize", resize);
     resize();
@@ -122,19 +124,6 @@ function create() {
     this.lasers = this.add.group();
     this.lasers.enableBody = true;
     this.lasers.createMultiple(20, "laser");
-
-    // this.lasers.callAll(
-    //     "events.onOutOfBounds.add",
-    //     "events.onOutOfBounds",
-    //     resetLaser
-    // );
-    // Same as above, set the anchor of every sprite to 0.5, 1.0
-    // this.lasers.callAll("anchor.setTo", "anchor", 0.5, 1.0);
-    //
-    // // This will set 'checkWorldBounds' to true on all sprites in the group
-    // this.lasers.setAll("checkWorldBounds", true);
-    //
-    // // ...
 
     this.socket.on("currentPlayers", function(players) {
         Object.keys(players).forEach(function(id) {
@@ -169,24 +158,26 @@ function create() {
 
     this.blueScoreText = this.add.text(16, 16, "", {
         fontSize: "24px",
-        fill: "#0000ff"
+        fill: "#7ccdff"
     });
 
     this.redScoreText = this.add.text(16, 40, "", {
         fontSize: "24px",
-        fill: "#FF0000"
+        fill: "#ff8ef0"
     });
 
     this.socket.on("scoreUpdate", function(scores) {
         self.blueScoreText.setText("Blue: " + scores.blue);
-        self.redScoreText.setText("Red: " + scores.red);
+        self.redScoreText.setText("Pink: " + scores.red);
     });
 
     this.socket.on("starLocation", function(starLocation) {
         if (self.star) self.star.destroy();
         self.star = self.physics.add
             .image(starLocation.x, starLocation.y, "star")
-            .setDisplaySize(64, 64)
+            .setRotation(starLocation.r)
+            .setAngularVelocity(starLocation.angv)
+            .setDisplaySize(54, 54)
             .setVelocityX(-500);
         self.physics.add.overlap(
             self.catcher,
@@ -213,7 +204,7 @@ function create() {
         if (self.aubergine) self.aubergine.destroy();
         self.aubergine = self.physics.add
             .image(aubergineData.x, aubergineData.y, "aubergine")
-            .setDisplaySize(64, 64)
+            .setDisplaySize(54, 54)
             .setVelocityX(aubergineData.vx)
             .setVelocityY(aubergineData.vy)
             .setRotation(aubergineData.r)
@@ -239,12 +230,72 @@ function create() {
         );
     });
 
+    this.socket.on("poopData", function(poopData) {
+        if (self.poop) self.poop.destroy();
+        self.poop = self.physics.add
+            .image(poopData.x, poopData.y, "poop")
+            .setDisplaySize(54, 54)
+            .setVelocityX(poopData.vx)
+            .setVelocityY(poopData.vy)
+            .setRotation(poopData.r)
+            .setAngularVelocity(poopData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.poop,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("poopMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.poop,
+            function() {
+                this.socket.emit("poopCollected");
+            },
+            null,
+            self
+        );
+    });
+
+    this.socket.on("teslaData", function(teslaData) {
+        if (self.tesla) self.tesla.destroy();
+        self.tesla = self.physics.add
+            .image(teslaData.x, teslaData.y, "tesla")
+            .setDisplaySize(109, 64)
+            .setVelocityX(teslaData.vx)
+            .setVelocityY(teslaData.vy)
+            .setRotation(teslaData.r)
+            .setAngularVelocity(teslaData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.tesla,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("teslaMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.tesla,
+            function() {
+                this.socket.emit("teslaCollected");
+            },
+            null,
+            self
+        );
+    });
+
     this.socket.on("meteroidLocation", function(meteroidData) {
         if (self.meteroid) self.meteroid.destroy();
         var randScale = Math.floor(Math.random() * 5) + 1;
         self.meteroid = self.physics.add
             .image(meteroidData.x, meteroidData.y, "meteroid")
-            .setDisplaySize(meteroidData.dsize, meteroidData.dsize)
+            .setScale(meteroidData.dscale)
             .setVelocityX(meteroidData.vx)
             .setVelocityY(meteroidData.vy)
             .setRotation(meteroidData.r)
@@ -348,7 +399,6 @@ function update() {
         this.ship.oldPosition = {
             x: this.ship.x,
             y: this.ship.y
-            // rotation: this.ship.rotation
         };
 
         if (this.cursors.left.isDown) {
@@ -356,7 +406,6 @@ function update() {
         } else if (this.cursors.right.isDown) {
             this.ship.setVelocityX(500);
             this.ship.setAcceleration(100);
-            // this.ship.rotation += 10;
             this.backgroundOne.tilePositionX += 0.2;
             this.backgroundTwo.tilePositionX += 0.2;
             this.backgroundThree.tilePositionX += 3.5;
@@ -368,127 +417,34 @@ function update() {
             this.ship.setVelocityY(-470);
             this.backgroundTwo.tilePositionY += -0.01;
             this.backgroundThree.tilePositionY += -0.5;
-            // this.ship.rotation + 1.1;
-            // this.ship.setAngularVelocity(-100);
         } else if (this.cursors.down.isDown) {
             this.ship.setVelocityY(470);
             this.backgroundTwo.tilePositionY += 0.01;
             this.backgroundThree.tilePositionY += 0.5;
-            // this.ship.rotation + 1.1;
-            // this.ship.setAngularVelocity(100);
-            // this.ship.setAcceleration(0);
         } else {
             this.ship.setVelocityY(0);
         }
     }
-
-    // if (this.meteroid) {
-    //     if (this.meteroid.x > game.width - 100) {
-    //         this.meteroid.x = game.width - 100;
-    //         this.meteroid.body.acceleration.x = 0;
-    //     }
-    //     if (this.meteroid.x < -100) {
-    //         this.meteroid.x = Math.floor(Math.random() * 1000) + 1550;
-    //         this.meteroid.y = Math.floor(Math.random() * 720) + 10;
-    //         // this.meteroid.body.acceleration.x = 0;
-    //     }
-    //     if (this.meteroid.y > game.height - 100) {
-    //         this.meteroid.y = game.height - 100;
-    //         this.meteroid.body.acceleration.x = 0;
-    //     }
-    //     if (this.meteroid.y < -100) {
-    //         this.meteroid.x = Math.floor(Math.random() * 1500) + 1550;
-    //         this.meteroid.y = Math.floor(Math.random() * 1220) + 1000;
-    //         // this.meteroid.body.acceleration.x = 0;
-    //     }
-    // }
-
-    // if (fireButton.isDown || game.input.activePointer.isDown) {
-    //     fireBullet();
-    // }
-    // if (this.firebutton.isDown) {
-    //     fireBullet();
-    // }
-
-    // Game.input.activePointer is either the first finger touched, or the mouse
-    // if (game.input.activePointer.isDown) {
-    //     // We'll manually keep track if the pointer wasn't already down
-    //     if (!mouseTouchDown) {
-    //         touchDown();
-    //     }
-    // } else {
-    //     if (mouseTouchDown) {
-    //         touchUp();
-    //     }
-    // }
-
-    // function touchDown() {
-    //     // Set touchDown to true, so we only trigger this once
-    //     mouseTouchDown = true;
-    //     fireLaser();
-    // }
-    //
-    // function touchUp() {
-    //     // Set touchDown to false, so we can trigger touchDown on the next click
-    //     mouseTouchDown = false;
-    // }
-
-    // Loop over the keys
-    // for (var index in phaserKeys) {
-    //     // Save a reference to the current key
-    //     var key = phaserKeys[index];
-    //     // If the key was just pressed, fire a laser
-    //     if (key.justDown) {
-    //         fireLaser();
-    //     }
-    // }
 }
-
-// function init() {
-//     // Listen to space & enter keys
-//     var keys = [Phaser.KeyCode.SPACE, Phaser.KeyCode.ENTER];
-//     // Create Phaser.Key objects for listening to the state
-//     phaserKeys = game.input.keyboard.addKeys(keys);
-//     // Capture these keys to stop the browser from receiving this event
-//     game.input.keyboard.addKeyCapture(keys);
-// }
-//
-// function fireLaser() {
-//     // Get the first laser that's inactive, by passing 'false' as a parameter
-//     var laser = lasers.getFirstExists(false);
-//     if (laser) {
-//         // If we have a laser, set it to the starting position
-//         laser.reset(ship.x, ship.y - 20);
-//         // Give it a velocity of -500 so it starts shooting
-//         laser.body.velocity.y = -500;
-//     }
-// }
-//
-// function resetLaser(laser) {
-//     // Destroy the laser
-//     laser.kill();
-// }
 
 function addPlayer(self, playerInfo) {
     self.ship = self.physics.add
         .image(playerInfo.x, playerInfo.y, "ship")
         .setOrigin(0.5, 0.5)
-        .setDisplaySize(64, 64);
+        .setDisplaySize(44, 44);
     if (playerInfo.team === "blue") {
         self.ship.setTint(0x0000ff);
     } else {
         self.ship.setTint(0xff0000);
     }
-    self.ship.setDrag(00);
-    self.ship.setAngularDrag(00);
     self.ship.setMaxVelocity(600);
 }
 
 function addOtherPlayers(self, playerInfo) {
     const otherPlayer = self.add
-        .sprite(playerInfo.x, playerInfo.y, "otherPlayer")
+        .image(playerInfo.x, playerInfo.y, "otherPlayer")
         .setOrigin(0.5, 0.5)
-        .setDisplaySize(64, 64);
+        .setDisplaySize(44, 44);
     if (playerInfo.team === "blue") {
         otherPlayer.setTint(0x0000ff);
     } else {
