@@ -20,6 +20,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload() {
+    this.cursors = this.input.keyboard.createCursorKeys();
+
     this.load.on("progress", function(value) {
         console.log(value);
         progressBar.clear();
@@ -46,16 +48,15 @@ function preload() {
     // for (var i = 0; i < 500; i++) {
     //     this.load.image('logo'+i, 'zenvalogo.png');
     // }
+
     this.load.image("spark", "assets/particles.png");
     this.load.image("ship", "assets/ships/whitelines.png");
     this.load.image("catcher", "assets/line.png");
     this.load.image("otherPlayer", "assets/ships/whitefull.png");
     this.load.image("meteroid", "assets/meteroid.png");
-    // this.load.image("star", "assets/meteroid2.png");
-    // this.load.image("star", "assets/meteroid3.png");
-    // this.load.image("star", "assets/meteroid4.png");
-    // this.load.image("star", "assets/meteroid5.png");
+    this.load.image("meteroidTwo", "assets/meteroidtwo.png");
     this.load.image("star", "assets/star_gold.png");
+    this.load.image("aubergine", "assets/emoji/aubergine.png");
     this.load.image("bgtile", "assets/backgrounds/starsbig.png");
     this.load.image("bgtileTwo", "assets/backgrounds/starsbig.png");
     this.load.image("laser", "assets/bullet.png");
@@ -85,7 +86,15 @@ function create() {
         .setScale(8);
 
     this.catcher = this.physics.add.staticGroup();
-    this.catcher.create(0, 410, "catcher");
+    this.catcher
+        .create(520, -750, "catcher")
+        .setScale(10.5)
+        .setRotation(1);
+    this.catcher
+        .create(520, 1550, "catcher")
+        .setScale(10.5)
+        .setRotation(-1);
+    this.catcher.create(-1280, 360, "catcher").setScale(10.5);
 
     // var particles = this.add.particles("spark");
     //
@@ -95,7 +104,6 @@ function create() {
     // emitter.setSpeed(200);
     // // emitter.setVelocityX(-50);
     // emitter.setBlendMode(Phaser.BlendModes.ADD);
-
     // bullets = this.add.group();
     // bullets.enableBody = true;
     //
@@ -109,6 +117,8 @@ function create() {
     var self = this;
     this.socket = io();
     this.otherPlayers = this.physics.add.group();
+    this.meteroid = this.physics.add.group("meteroid");
+    this.meteroidTwo = this.physics.add.group("meteroidTwo");
     this.lasers = this.add.group();
     this.lasers.enableBody = true;
     this.lasers.createMultiple(20, "laser");
@@ -158,13 +168,13 @@ function create() {
     });
 
     this.blueScoreText = this.add.text(16, 16, "", {
-        fontSize: "18px",
-        fill: "#FFF"
+        fontSize: "24px",
+        fill: "#0000ff"
     });
 
-    this.redScoreText = this.add.text(16, 34, "", {
-        fontSize: "18px",
-        fill: "#FFF"
+    this.redScoreText = this.add.text(16, 40, "", {
+        fontSize: "24px",
+        fill: "#FF0000"
     });
 
     this.socket.on("scoreUpdate", function(scores) {
@@ -199,13 +209,46 @@ function create() {
         );
     });
 
+    this.socket.on("aubergineData", function(aubergineData) {
+        if (self.aubergine) self.aubergine.destroy();
+        self.aubergine = self.physics.add
+            .image(aubergineData.x, aubergineData.y, "aubergine")
+            .setDisplaySize(64, 64)
+            .setVelocityX(aubergineData.vx)
+            .setVelocityY(aubergineData.vy)
+            .setRotation(aubergineData.r)
+            .setAngularVelocity(aubergineData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.aubergine,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("aubergineMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.aubergine,
+            function() {
+                this.socket.emit("aubergineCollected");
+            },
+            null,
+            self
+        );
+    });
+
     this.socket.on("meteroidLocation", function(meteroidData) {
         if (self.meteroid) self.meteroid.destroy();
         var randScale = Math.floor(Math.random() * 5) + 1;
         self.meteroid = self.physics.add
             .image(meteroidData.x, meteroidData.y, "meteroid")
-            .setDisplaySize(64, 64)
-            .setVelocityX(-500);
+            .setDisplaySize(meteroidData.dsize, meteroidData.dsize)
+            .setVelocityX(meteroidData.vx)
+            .setVelocityY(meteroidData.vy)
+            .setRotation(meteroidData.r)
+            .setAngularVelocity(meteroidData.angv);
         self.physics.add.overlap(
             self.catcher,
             self.meteroid,
@@ -227,35 +270,35 @@ function create() {
         );
     });
 
-    // this.socket.on("meteroidLocation", function(meteroidLocation) {
-    //     // var rand = Math.floor(Math.random() * -100) + -50;
-    //     // var randTwo = Math.floor(Math.random() * 5) + 1;
-    //     // var dSize = Math.floor(Math.random() * 200) + 10;
-    //     // var randThree = Math.floor(Math.random() * 100) + -100;
-    //     // if (self.meteroid) self.meteroid.destroy();
-    //     self.meteroid = self.physics.add
-    //         .image(meteroidLocation.x, meteroidLocation.y, "meteroid")
-    //         .setDisplaySize(meteriodLocation.mDSize, 64);
-    //     self.physics.add.overlap(
-    //         self.catcher,
-    //         self.meteroid,
-    //         function() {
-    //             console.log("catcher collision");
-    //             this.socket.emit("meteroidReset");
-    //         },
-    //         null,
-    //         self
-    //     );
-    //     self.physics.add.overlap(
-    //         self.ship,
-    //         self.meteroid,
-    //         function() {
-    //             this.socket.emit("meteroidCollision");
-    //         },
-    //         null,
-    //         self
-    //     );
-    // });
+    this.socket.on("meteroidTwoLocation", function(meteroidTwoData) {
+        if (self.meteroidTwo) self.meteroidTwo.destroy();
+        self.meteroidTwo = self.physics.add
+            .image(meteroidTwoData.x, meteroidTwoData.y, "meteroidTwo")
+            .setScale(meteroidTwoData.dscale)
+            .setVelocityX(meteroidTwoData.vx)
+            .setVelocityY(meteroidTwoData.vy)
+            .setRotation(meteroidTwoData.r)
+            .setAngularVelocity(meteroidTwoData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.meteroidTwo,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("meteroidTwoReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.meteroidTwo,
+            function() {
+                this.socket.emit("meteroidTwoCollision");
+            },
+            null,
+            self
+        );
+    });
 
     this.cursors = this.input.keyboard.createCursorKeys();
     // this.firebutton = this.input.keyboard.addKey(
@@ -264,9 +307,9 @@ function create() {
 }
 
 function update() {
-    this.backgroundZero.tilePositionX += 0.0001;
-    this.backgroundOne.tilePositionX += 0.05;
-    this.backgroundTwo.tilePositionX += 0.1;
+    this.backgroundZero.tilePositionX += 0.001;
+    this.backgroundOne.tilePositionX += 0.15;
+    this.backgroundTwo.tilePositionX += 0.3;
     this.backgroundThree.tilePositionX += 2.5;
 
     if (this.ship) {
@@ -307,33 +350,6 @@ function update() {
             y: this.ship.y
             // rotation: this.ship.rotation
         };
-
-        // if (this.star) {
-        //     if (this.star.x < -100) {
-        //         this.star.x = Math.floor(Math.random() * 1000) + 1550;
-        //         this.star.y = Math.floor(Math.random() * 720) + 10;
-        //         // this.meteroid.body.acceleration.x = 0;
-        //     }
-        // }
-
-        // if (
-        //     this.star.oldPosition &&
-        //     (x !== this.star.oldPosition.x || y !== this.star.oldPosition.y)
-        //     //||
-        //     //r !== this.ship.oldPosition.rotation
-        // ) {
-        //     this.socket.emit("starPosition", {
-        //         x: this.star.x,
-        //         y: this.star.y
-        //         // rotation: this.ship.rotation
-        //     });
-        // }
-        //
-        // this.star.oldPosition = {
-        //     x: this.star.x,
-        //     y: this.star.y
-        //     // rotation: this.ship.rotation
-        // };
 
         if (this.cursors.left.isDown) {
             this.ship.setVelocityX(-350);
