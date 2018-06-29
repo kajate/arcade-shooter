@@ -5,20 +5,22 @@ var io = require("socket.io").listen(server);
 
 var players = {};
 
-//I will, in the means of time, get rid of all this repetetiveteteive code.
-
-var star = {
-    x: Math.floor(Math.random() * 2000) + 1450,
-    y: Math.floor(Math.random() * 650) + 50,
-    r: Math.floor(Math.random() * 50) + -50,
-    vx: Math.floor(Math.random() * -600) + -300,
-    vy: Math.floor(Math.random() * -200) + 200,
-    angv: Math.floor(Math.random() * 145) + 115
-};
+//I will, in the means of time, fix all of this repetetiveteteive code,
+//by creating a set of different speeds which I call on each property,
+//for now, this is a quick-fix.
 
 var scores = {
     blue: 0,
     red: 0
+};
+
+var star = {
+    x: Math.floor(Math.random() * 2500) + 1500,
+    y: Math.floor(Math.random() * 650) + 50,
+    vx: Math.floor(Math.random() * -200) + -500,
+    vy: Math.floor(Math.random() * 100) + -100,
+    r: Math.floor(Math.random() * 50) + -50,
+    angv: Math.floor(Math.random() * 150) + 50
 };
 
 var aubergine = {
@@ -75,40 +77,47 @@ var alien = {
     angv: Math.floor(Math.random() * 145) + 115
 };
 
+var meteroidStart = {
+    y: Math.floor(Math.random() * 700) + 50,
+    dw: Math.floor(Math.random() * 1000) + 20,
+    dh: Math.floor(Math.random() * 1000) + 20,
+    vx: Math.floor(Math.random() * -350) + 50,
+    vy: Math.floor(Math.random() * -50) + 50,
+    r: Math.floor(Math.random() * -50) + 50,
+    angv: Math.floor(Math.random() * 50) + 10
+};
+
 var meteroid = {
     x: Math.floor(Math.random() * 2000) + 1500,
-    y: Math.floor(Math.random() * 750) + 50,
-    dw: Math.floor(Math.random() * 1200) + 20,
-    dh: Math.floor(Math.random() * 1200) + 20,
-    // dscale: (Math.random() * (1.12 - 0.12) + 0.12).toFixed(2),
-    vx: -350,
+    y: Math.floor(Math.random() * 700) + 50,
+    dw: Math.floor(Math.random() * 1000) + 20,
+    dh: Math.floor(Math.random() * 1000) + 20,
+    vx: Math.floor(Math.random() * -350) + 50,
     vy: Math.floor(Math.random() * -50) + 50,
-    r: 20,
-    angv: 10
+    r: Math.floor(Math.random() * -50) + 50,
+    angv: Math.floor(Math.random() * 50) + 10
 };
 
 var meteroidTwo = {
-    x: Math.floor(Math.random() * 2000) + 1500,
-    y: Math.floor(Math.random() * 750) + 50,
-    dw: Math.floor(Math.random() * 1200) + 20,
-    dh: Math.floor(Math.random() * 1200) + 20,
-    // dscale: (Math.random() * (1.12 - 0.12) + 0.12).toFixed(2),
-    vx: -200,
-    vy: 50, //Math.floor(Math.random() * -50) + 50,
-    r: 20,
-    angv: 10
+    x: Math.floor(Math.random() * 2000) + 2500,
+    y: Math.floor(Math.random() * 700) + 50,
+    dw: Math.floor(Math.random() * 1000) + 20,
+    dh: Math.floor(Math.random() * 1000) + 20,
+    vx: Math.floor(Math.random() * -350) + 50,
+    vy: Math.floor(Math.random() * -50) + 50,
+    r: Math.floor(Math.random() * -50) + 50,
+    angv: Math.floor(Math.random() * 50) + 10
 };
 
 var meteroidThree = {
-    x: Math.floor(Math.random() * 2000) + 1500,
-    y: Math.floor(Math.random() * 750) + 50,
-    dw: Math.floor(Math.random() * 1200) + 20,
-    dh: Math.floor(Math.random() * 1200) + 20,
-    // dscale: (Math.random() * (1.12 - 0.12) + 0.12).toFixed(2),
-    vx: -200,
-    vy: 50, //Math.floor(Math.random() * -50) + 50,
-    r: 20,
-    angv: 10
+    x: Math.floor(Math.random() * 2500) + 3000,
+    y: Math.floor(Math.random() * 700) + 50,
+    dw: Math.floor(Math.random() * 1000) + 20,
+    dh: Math.floor(Math.random() * 1000) + 20,
+    vx: Math.floor(Math.random() * -350) + 50,
+    vy: Math.floor(Math.random() * -50) + 50,
+    r: Math.floor(Math.random() * -50) + 50,
+    angv: Math.floor(Math.random() * 50) + 10
 };
 
 app.use(express.static(__dirname + "/public"));
@@ -118,9 +127,6 @@ app.get("/", function(req, res) {
 });
 
 io.on("connection", function(socket) {
-    console.log("player " + [socket.id] + "  is joining the game");
-
-    // create a new player and add it to our players object
     players[socket.id] = {
         rotation: 0,
         x: 50,
@@ -129,48 +135,34 @@ io.on("connection", function(socket) {
         team: Math.floor(Math.random() * 2) == 0 ? "red" : "blue"
     };
 
-    // send the players object to the new player
     socket.emit("currentPlayers", players);
-    //make sure the hiddenplayer exists everywhere in ever game
-    // socket.emit("hiddenPlayer", hiddenPlayer);
-    // send the star object to the new player
+
     socket.emit("starLocation", star);
     socket.emit("aubergineData", aubergine);
     socket.emit("poopData", poop);
     socket.emit("teslaData", tesla);
     socket.emit("pizzaData", pizza);
     socket.emit("peachData", peach);
-    socket.emit("alien", alien);
+    socket.emit("alienData", alien);
 
-    // send the current scores
     socket.emit("scoreUpdate", scores);
-    //send the current meteroid location
+
     socket.emit("meteroidLocation", meteroid);
     socket.emit("meteroidTwoLocation", meteroidTwo);
     socket.emit("meteroidThreeLocation", meteroidThree);
 
-    // update all other players of the new player
     socket.broadcast.emit("newPlayer", players[socket.id]);
     console.log("player " + [socket.id] + "  has joined the game");
 
     socket.on("disconnect", function() {
-        console.log("player " + [socket.id] + " is leaving the game");
-
-        // remove this player from our players object
         delete players[socket.id];
-
-        // emit a message to all players to remove this player
         io.emit("disconnect", socket.id);
-
         console.log("player " + [socket.id] + " has left the game");
     });
 
-    // when a player moves, update the player data
     socket.on("playerMovement", function(movementData) {
         players[socket.id].x = movementData.x;
         players[socket.id].y = movementData.y;
-        // players[socket.id].rotation = movementData.rotation;
-        // emit a message to all players about the player that moved
         socket.broadcast.emit("playerMoved", players[socket.id]);
     });
 
@@ -180,23 +172,23 @@ io.on("connection", function(socket) {
         } else {
             scores.red += 100;
         }
-        star.angv = Math.floor(Math.random() * 145) + 115;
-        star.vx = Math.floor(Math.random() * -600) + -200;
-        star.vy = Math.floor(Math.random() * -200) + 200;
-        star.r = Math.floor(Math.random() * 50) + -50;
-        star.x = Math.floor(Math.random() * 2000) + 1450;
+        star.x = Math.floor(Math.random() * 2500) + 1500;
         star.y = Math.floor(Math.random() * 650) + 50;
-        io.emit("starLocation", star); //random number here for the new location of the star
+        star.vx = Math.floor(Math.random() * -200) + -500;
+        star.vy = Math.floor(Math.random() * 100) + -100;
+        star.r = Math.floor(Math.random() * 50) + -50;
+        star.angv = Math.floor(Math.random() * 150) + 50;
+        io.emit("starLocation", star);
         io.emit("scoreUpdate", scores);
     });
 
     socket.on("starMissedAndReset", function() {
-        star.angv = Math.floor(Math.random() * 145) + 115;
-        star.vx = Math.floor(Math.random() * -600) + -200;
-        star.vy = Math.floor(Math.random() * -200) + 200;
-        star.r = Math.floor(Math.random() * 50) + -50;
-        star.x = Math.floor(Math.random() * 2000) + 1450;
+        star.x = Math.floor(Math.random() * 2500) + 1500;
         star.y = Math.floor(Math.random() * 650) + 50;
+        star.vx = Math.floor(Math.random() * -200) + -500;
+        star.vy = Math.floor(Math.random() * 100) + -100;
+        star.r = Math.floor(Math.random() * 50) + -50;
+        star.angv = Math.floor(Math.random() * 150) + 50;
         io.emit("starLocation", star); //random number here for the new location of the star
     });
 
@@ -206,11 +198,11 @@ io.on("connection", function(socket) {
         } else {
             scores.red += 500;
         }
-        aubergine.r = Math.floor(Math.random() * 50) + -50;
-        aubergine.vx = Math.floor(Math.random() * -200) + -100;
-        aubergine.vy = Math.floor(Math.random() * -50) + 50;
-        aubergine.x = Math.floor(Math.random() * 2200) + 2550;
+        aubergine.x = Math.floor(Math.random() * 3500) + 3000;
         aubergine.y = Math.floor(Math.random() * 650) + 50;
+        aubergine.r = Math.floor(Math.random() * 50) + -50;
+        aubergine.vx = Math.floor(Math.random() * -100) + -200;
+        aubergine.vy = Math.floor(Math.random() * 50) + -50;
         aubergine.angv = Math.floor(Math.random() * 145) + 115;
         io.emit("aubergineData", aubergine); //random number here for the new location of the star
         io.emit("scoreUpdate", scores);

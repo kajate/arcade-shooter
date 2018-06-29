@@ -457,7 +457,6 @@ function create() {
 }
 
 function update() {
-    this.backgroundEarth.tilePositionX += 0.13;
     this.backgroundZero.tilePositionX += 0.08;
     this.backgroundOne.tilePositionX += 0.05;
     this.backgroundTwo.tilePositionX += 0.18;
