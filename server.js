@@ -61,9 +61,9 @@ var tesla = {
 };
 
 var pizza = {
-    x: Math.floor(Math.random() * 4000) + 3500,
+    x: Math.floor(Math.random() * 6000) + 5500,
     y: Math.floor(Math.random() * 650) + 50,
-    vx: Math.floor(Math.random() * -100) + -300,
+    vx: Math.floor(Math.random() * -300) + -100,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
@@ -79,9 +79,9 @@ var peach = {
 };
 
 var alien = {
-    x: Math.floor(Math.random() * 4000) + 3000,
+    x: Math.floor(Math.random() * 20000) + 15000,
     y: Math.floor(Math.random() * 650) + 50,
-    vx: Math.floor(Math.random() * -1000) + -600,
+    vx: Math.floor(Math.random() * -900) + -600,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
@@ -194,13 +194,13 @@ io.on("connection", function(socket) {
 
     socket.on("alienCollected", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue += Math.floor(Math.random() * 20000) + 1;
+            scores.blue += Math.floor(Math.random() * 20000) + 3000;
         } else {
-            scores.red += Math.floor(Math.random() * 20000) + 1;
+            scores.red += Math.floor(Math.random() * 20000) + 3000;
         }
         alien.x = Math.floor(Math.random() * 15000) + 10000;
         alien.y = Math.floor(Math.random() * 600) + 100;
-        alien.vx = Math.floor(Math.random() * -1700) + -1000;
+        alien.vx = Math.floor(Math.random() * -1500) + -800;
         alien.vy = Math.floor(Math.random() * 50) + -50;
         alien.r = Math.floor(Math.random() * 10) + -10;
         alien.angv = Math.floor(Math.random() * 50) + 10;
@@ -216,7 +216,7 @@ io.on("connection", function(socket) {
         }
         alien.x = Math.floor(Math.random() * 15000) + 10000;
         alien.y = Math.floor(Math.random() * 600) + 100;
-        alien.vx = Math.floor(Math.random() * -1700) + -1000;
+        alien.vx = Math.floor(Math.random() * -1500) + -800;
         alien.vy = Math.floor(Math.random() * 50) + -50;
         alien.r = Math.floor(Math.random() * 10) + -10;
         alien.angv = Math.floor(Math.random() * 50) + 10;
@@ -308,9 +308,9 @@ io.on("connection", function(socket) {
         } else {
             scores.red += 6969;
         }
-        pizza.x = Math.floor(Math.random() * 4000) + 3500;
+        pizza.x = Math.floor(Math.random() * 6000) + 5500;
         pizza.y = Math.floor(Math.random() * 650) + 50;
-        pizza.vx = Math.floor(Math.random() * -100) + -300;
+        pizza.vx = Math.floor(Math.random() * -300) + -100;
         pizza.vy = Math.floor(Math.random() * 50) + -50;
         pizza.r = Math.floor(Math.random() * 50) + -50;
         pizza.angv = Math.floor(Math.random() * 150) + 50;
@@ -319,9 +319,9 @@ io.on("connection", function(socket) {
     });
 
     socket.on("pizzaMissedAndReset", function() {
-        pizza.x = Math.floor(Math.random() * 4000) + 3500;
+        pizza.x = Math.floor(Math.random() * 6000) + 5500;
         pizza.y = Math.floor(Math.random() * 650) + 50;
-        pizza.vx = Math.floor(Math.random() * -100) + -300;
+        pizza.vx = Math.floor(Math.random() * -300) + -100;
         pizza.vy = Math.floor(Math.random() * 50) + -50;
         pizza.r = Math.floor(Math.random() * 50) + -50;
         pizza.angv = Math.floor(Math.random() * 150) + 50;
