@@ -16,21 +16,21 @@ var scores = {
 };
 
 var star = {
-    x: Math.floor(Math.random() * 2500) + 1500,
+    x: Math.floor(Math.random() * 2000) + 1200,
     y: Math.floor(Math.random() * 650) + 50,
     vx: Math.floor(Math.random() * -200) + -500,
-    vy: Math.floor(Math.random() * 100) + -100,
+    vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
 
 var alien = {
-    x: Math.floor(Math.random() * 15000) + 10000,
-    y: Math.floor(Math.random() * 600) + 100,
-    vx: Math.floor(Math.random() * -1700) + -1000,
+    x: Math.floor(Math.random() * 20000) + 15000,
+    y: Math.floor(Math.random() * 650) + 50,
+    vx: Math.floor(Math.random() * -1200) + -900,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 10) + -10,
-    angv: Math.floor(Math.random() * 50) + 10
+    angv: Math.floor(Math.random() * 10) + 5
 };
 
 var aubergine = {
@@ -43,80 +43,80 @@ var aubergine = {
 };
 
 var poop = {
-    x: Math.floor(Math.random() * 2700) + 2200,
+    x: Math.floor(Math.random() * 3500) + 3000,
     y: Math.floor(Math.random() * 600) + 200,
-    vx: Math.floor(Math.random() * -100) + -40,
+    vx: Math.floor(Math.random() * -40) + -80,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
 
 var tesla = {
-    x: Math.floor(Math.random() * 7000) + 6000,
-    y: Math.floor(Math.random() * 600) + 150,
-    vx: Math.floor(Math.random() * -400) + -100,
-    vy: Math.floor(Math.random() * -50) + -50,
+    x: Math.floor(Math.random() * 20000) + 15000,
+    y: Math.floor(Math.random() * 600) + 100,
+    vx: Math.floor(Math.random() * -150) + -300,
+    vy: Math.floor(Math.random() * 10) + -10,
     r: Math.floor(Math.random() * 50) + -50,
-    angv: Math.floor(Math.random() * 150) + 50
+    angv: Math.floor(Math.random() * 100) + 50
 };
 
 var pizza = {
     x: Math.floor(Math.random() * 6000) + 5500,
     y: Math.floor(Math.random() * 650) + 50,
-    vx: Math.floor(Math.random() * -300) + -100,
+    vx: Math.floor(Math.random() * -100) + -400,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
 
+var fistbump = {
+    x: Math.floor(Math.random() * 8000) + 7000,
+    y: Math.floor(Math.random() * 650) + 50,
+    vx: Math.floor(Math.random() * -400) + -600,
+    vy: Math.floor(Math.random() * 100) + -100,
+    r: Math.floor(Math.random() * 5) + -5,
+    angv: Math.floor(Math.random() * 10) + 1
+};
+
 var peach = {
     x: Math.floor(Math.random() * 4000) + 3500,
-    y: Math.floor(Math.random() * 650) + 50,
+    y: Math.floor(Math.random() * 600) + 100,
+    vx: Math.floor(Math.random() * -100) + -300,
+    vy: Math.floor(Math.random() * 10) + -10,
+    r: Math.floor(Math.random() * 50) + -50,
+    angv: Math.floor(Math.random() * 150) + 50
+};
+
+var meteroid = {
+    x: Math.floor(Math.random() * 2000) + 1700,
+    y: Math.floor(Math.random() * 700) + 50,
+    dw: Math.floor(Math.random() * 1000) + 20,
+    dh: Math.floor(Math.random() * 500) + 20,
     vx: Math.floor(Math.random() * -100) + -300,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
 
-var alien = {
-    x: Math.floor(Math.random() * 20000) + 15000,
-    y: Math.floor(Math.random() * 650) + 50,
-    vx: Math.floor(Math.random() * -900) + -600,
+var meteroidTwo = {
+    x: Math.floor(Math.random() * 2500) + 2000,
+    y: Math.floor(Math.random() * 700) + 50,
+    dw: Math.floor(Math.random() * 1000) + 20,
+    dh: Math.floor(Math.random() * 500) + 20,
+    vx: Math.floor(Math.random() * -100) + -300,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
 
-var meteroid = {
+var meteroidThree = {
     x: Math.floor(Math.random() * 2500) + 2000,
     y: Math.floor(Math.random() * 700) + 50,
     dw: Math.floor(Math.random() * 1000) + 20,
     dh: Math.floor(Math.random() * 500) + 20,
-    vx: Math.floor(Math.random() * -350) + 100,
-    vy: Math.floor(Math.random() * -50) + 50,
-    r: Math.floor(Math.random() * -50) + 50,
-    angv: Math.floor(Math.random() * 150) + 50
-};
-
-var meteroidTwo = {
-    x: Math.floor(Math.random() * 2500) + 200,
-    y: Math.floor(Math.random() * 700) + 50,
-    dw: Math.floor(Math.random() * 1000) + 20,
-    dh: Math.floor(Math.random() * 500) + 20,
-    vx: Math.floor(Math.random() * -550) + 50,
-    vy: Math.floor(Math.random() * -50) + 50,
-    r: Math.floor(Math.random() * -50) + 50,
-    angv: Math.floor(Math.random() * 150) + 50
-};
-
-var meteroidThree = {
-    x: Math.floor(Math.random() * 3000) + 2500,
-    y: Math.floor(Math.random() * 700) + 50,
-    dw: Math.floor(Math.random() * 1000) + 20,
-    dh: Math.floor(Math.random() * 500) + 20,
-    vx: Math.floor(Math.random() * -350) + 50,
-    vy: Math.floor(Math.random() * -50) + 50,
-    r: Math.floor(Math.random() * -50) + 50,
+    vx: Math.floor(Math.random() * -100) + -300,
+    vy: Math.floor(Math.random() * 50) + -50,
+    r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
 
@@ -144,6 +144,7 @@ io.on("connection", function(socket) {
     socket.emit("pizzaData", pizza);
     socket.emit("peachData", peach);
     socket.emit("alienData", alien);
+    socket.emit("fistbumpData", fistbump);
 
     socket.emit("scoreUpdate", scores);
 
@@ -172,10 +173,10 @@ io.on("connection", function(socket) {
         } else {
             scores.red += 100;
         }
-        star.x = Math.floor(Math.random() * 2500) + 1500;
+        star.x = Math.floor(Math.random() * 2500) + 1700;
         star.y = Math.floor(Math.random() * 650) + 50;
         star.vx = Math.floor(Math.random() * -200) + -500;
-        star.vy = Math.floor(Math.random() * 100) + -100;
+        star.vy = Math.floor(Math.random() * 50) + -100;
         star.r = Math.floor(Math.random() * 50) + -50;
         star.angv = Math.floor(Math.random() * 150) + 50;
         io.emit("starLocation", star);
@@ -183,10 +184,10 @@ io.on("connection", function(socket) {
     });
 
     socket.on("starMissedAndReset", function() {
-        star.x = Math.floor(Math.random() * 2500) + 1500;
-        star.y = Math.floor(Math.random() * 650) + 50;
+        star.x = Math.floor(Math.random() * 2500) + 1700;
+        star.y = Math.floor(Math.random() * 650) + 150;
         star.vx = Math.floor(Math.random() * -200) + -500;
-        star.vy = Math.floor(Math.random() * 100) + -100;
+        star.vy = Math.floor(Math.random() * 50) + -100;
         star.r = Math.floor(Math.random() * 50) + -50;
         star.angv = Math.floor(Math.random() * 150) + 50;
         io.emit("starLocation", star);
@@ -194,32 +195,32 @@ io.on("connection", function(socket) {
 
     socket.on("alienCollected", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue += Math.floor(Math.random() * 20000) + 3000;
+            scores.blue += alien.vx * -10;
         } else {
-            scores.red += Math.floor(Math.random() * 20000) + 3000;
+            scores.red += alien.vx * -10;
         }
-        alien.x = Math.floor(Math.random() * 15000) + 10000;
+        alien.x = Math.floor(Math.random() * 25000) + 12000;
         alien.y = Math.floor(Math.random() * 600) + 100;
-        alien.vx = Math.floor(Math.random() * -1500) + -800;
+        alien.vx = Math.floor(Math.random() * -700) + -1200;
         alien.vy = Math.floor(Math.random() * 50) + -50;
         alien.r = Math.floor(Math.random() * 10) + -10;
-        alien.angv = Math.floor(Math.random() * 50) + 10;
+        alien.angv = Math.floor(Math.random() * 10) + 5;
         io.emit("alienData", alien);
         io.emit("scoreUpdate", scores);
     });
 
     socket.on("alienMissedAndReset", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= Math.floor(Math.random() * 15000) + 5000;
+            scores.blue -= alien.vx * -3;
         } else {
-            scores.red -= Math.floor(Math.random() * 15000) + 5000;
+            scores.red -= alien.vx * -3;
         }
-        alien.x = Math.floor(Math.random() * 15000) + 10000;
+        alien.x = Math.floor(Math.random() * 25000) + 12000;
         alien.y = Math.floor(Math.random() * 600) + 100;
-        alien.vx = Math.floor(Math.random() * -1500) + -800;
+        alien.vx = Math.floor(Math.random() * -700) + -1200;
         alien.vy = Math.floor(Math.random() * 50) + -50;
         alien.r = Math.floor(Math.random() * 10) + -10;
-        alien.angv = Math.floor(Math.random() * 50) + 10;
+        alien.angv = Math.floor(Math.random() * 10) + 5;
         io.emit("alienData", alien);
         io.emit("scoreUpdate", scores);
     });
@@ -258,7 +259,7 @@ io.on("connection", function(socket) {
         }
         poop.x = Math.floor(Math.random() * 3200) + 2050;
         poop.y = Math.floor(Math.random() * 650) + 250;
-        poop.vx = Math.floor(Math.random() * -150) + -40;
+        poop.vx = Math.floor(Math.random() * -40) + -150;
         poop.vy = Math.floor(Math.random() * -10) + 10;
         poop.r = Math.floor(Math.random() * 50) + -50;
         poop.angv = Math.floor(Math.random() * 15) + 5;
@@ -269,7 +270,7 @@ io.on("connection", function(socket) {
     socket.on("poopMissedAndReset", function() {
         poop.x = Math.floor(Math.random() * 3200) + 2050;
         poop.y = Math.floor(Math.random() * 650) + 250;
-        poop.vx = Math.floor(Math.random() * -150) + -40;
+        poop.vx = Math.floor(Math.random() * -40) + -150;
         poop.vy = Math.floor(Math.random() * -10) + 10;
         poop.r = Math.floor(Math.random() * 50) + -50;
         poop.angv = Math.floor(Math.random() * 15) + 5;
@@ -278,27 +279,27 @@ io.on("connection", function(socket) {
 
     socket.on("teslaCollected", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue += 10000;
+            scores.blue += 15000;
         } else {
-            scores.red += 10000;
+            scores.red += 15000;
         }
-        tesla.x = Math.floor(Math.random() * 7000) + 6000;
-        tesla.y = Math.floor(Math.random() * 600) + 150;
-        tesla.vx = Math.floor(Math.random() * -400) + -100;
-        tesla.vy = Math.floor(Math.random() * -50) + -50;
+        tesla.x = Math.floor(Math.random() * 25000) + 20000;
+        tesla.y = Math.floor(Math.random() * 600) + 100;
+        tesla.vx = Math.floor(Math.random() * -150) + -300;
+        tesla.vy = Math.floor(Math.random() * 10) + -10;
         tesla.r = Math.floor(Math.random() * 50) + -50;
-        tesla.angv = Math.floor(Math.random() * 150) + 50;
+        tesla.angv = Math.floor(Math.random() * 100) + 50;
         io.emit("teslaData", tesla);
         io.emit("scoreUpdate", scores);
     });
 
     socket.on("teslaMissedAndReset", function() {
-        tesla.x = Math.floor(Math.random() * 7000) + 6000;
-        tesla.y = Math.floor(Math.random() * 600) + 150;
-        tesla.vx = Math.floor(Math.random() * -400) + -100;
-        tesla.vy = Math.floor(Math.random() * -50) + -50;
+        tesla.x = Math.floor(Math.random() * 25000) + 20000;
+        tesla.y = Math.floor(Math.random() * 600) + 100;
+        tesla.vx = Math.floor(Math.random() * -150) + -300;
+        tesla.vy = Math.floor(Math.random() * 10) + -10;
         tesla.r = Math.floor(Math.random() * 50) + -50;
-        tesla.angv = Math.floor(Math.random() * 150) + 50;
+        tesla.angv = Math.floor(Math.random() * 100) + 50;
         io.emit("teslaData", tesla);
     });
 
@@ -310,7 +311,7 @@ io.on("connection", function(socket) {
         }
         pizza.x = Math.floor(Math.random() * 6000) + 5500;
         pizza.y = Math.floor(Math.random() * 650) + 50;
-        pizza.vx = Math.floor(Math.random() * -300) + -100;
+        pizza.vx = Math.floor(Math.random() * -100) + -300;
         pizza.vy = Math.floor(Math.random() * 50) + -50;
         pizza.r = Math.floor(Math.random() * 50) + -50;
         pizza.angv = Math.floor(Math.random() * 150) + 50;
@@ -321,18 +322,44 @@ io.on("connection", function(socket) {
     socket.on("pizzaMissedAndReset", function() {
         pizza.x = Math.floor(Math.random() * 6000) + 5500;
         pizza.y = Math.floor(Math.random() * 650) + 50;
-        pizza.vx = Math.floor(Math.random() * -300) + -100;
+        pizza.vx = Math.floor(Math.random() * -100) + -300;
         pizza.vy = Math.floor(Math.random() * 50) + -50;
         pizza.r = Math.floor(Math.random() * 50) + -50;
         pizza.angv = Math.floor(Math.random() * 150) + 50;
         io.emit("pizzaData", pizza);
     });
 
+    socket.on("fistbumpCollected", function() {
+        if (players[socket.id].team === "blue") {
+            scores.blue += 5000;
+        } else {
+            scores.red += 5000;
+        }
+        fistbump.x = Math.floor(Math.random() * 3000) + 2500;
+        fistbump.y = Math.floor(Math.random() * 650) + 50;
+        fistbump.vx = Math.floor(Math.random() * -100) + -300;
+        fistbump.vy = Math.floor(Math.random() * 50) + -50;
+        fistbump.r = Math.floor(Math.random() * 5) + -5;
+        fistbump.angv = Math.floor(Math.random() * 10) + 1;
+        io.emit("fistbumpData", fistbump);
+        io.emit("scoreUpdate", scores);
+    });
+
+    socket.on("fistbumpMissedAndReset", function() {
+        fistbump.x = Math.floor(Math.random() * 6000) + 5500;
+        fistbump.y = Math.floor(Math.random() * 650) + 50;
+        fistbump.vx = Math.floor(Math.random() * -100) + -300;
+        fistbump.vy = Math.floor(Math.random() * 50) + -50;
+        fistbump.r = Math.floor(Math.random() * 50) + -50;
+        fistbump.angv = Math.floor(Math.random() * 150) + 50;
+        io.emit("fistbumpData", fistbump);
+    });
+
     socket.on("peachCollected", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue += 500;
+            scores.blue += 1000;
         } else {
-            scores.red += 500;
+            scores.red += 1000;
         }
         peach.x = Math.floor(Math.random() * 4000) + 3500;
         peach.y = Math.floor(Math.random() * 650) + 50;
@@ -354,19 +381,6 @@ io.on("connection", function(socket) {
         io.emit("peachData", peach);
     });
 
-    socket.on("meteroidCollision", function() {
-        if (players[socket.id].team === "blue") {
-            scores.blue -= 10;
-        } else {
-            scores.red -= 10;
-        }
-
-        if (meteroid <= 10) {
-            io.emit("meteroidData", meteroid);
-        }
-        io.emit("scoreUpdate", scores);
-    });
-
     socket.on("meteroidReset", function() {
         meteroid.dw = Math.floor(Math.random() * 1200) + 20;
         meteroid.dh = Math.floor(Math.random() * 1200) + 20;
@@ -379,11 +393,11 @@ io.on("connection", function(socket) {
         io.emit("meteroidLocation", meteroid);
     });
 
-    socket.on("meteroidTwoCollision", function() {
+    socket.on("meteroidCollision", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= 10;
+            scores.blue -= 50;
         } else {
-            scores.red -= 10;
+            scores.red -= 50;
         }
         io.emit("scoreUpdate", scores);
     });
@@ -400,11 +414,11 @@ io.on("connection", function(socket) {
         io.emit("meteroidTwoLocation", meteroidTwo);
     });
 
-    socket.on("meteroidThreeCollision", function() {
+    socket.on("meteroidTwoCollision", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= 10;
+            scores.blue -= 100;
         } else {
-            scores.red -= 10;
+            scores.red -= 100;
         }
         io.emit("scoreUpdate", scores);
     });
@@ -419,6 +433,15 @@ io.on("connection", function(socket) {
         meteroidThree.x = Math.floor(Math.random() * 2500) + 3000;
         meteroidThree.y = Math.floor(Math.random() * 750) + 50;
         io.emit("meteroidThreeLocation", meteroidThree);
+    });
+
+    socket.on("meteroidThreeCollision", function() {
+        if (players[socket.id].team === "blue") {
+            scores.blue -= 150;
+        } else {
+            scores.red -= 150;
+        }
+        io.emit("scoreUpdate", scores);
     });
 });
 

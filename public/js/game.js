@@ -56,6 +56,7 @@ function preload() {
     this.load.image("pizza", "assets/emoji/pizza.png");
     this.load.image("peach", "assets/emoji/peach.png");
     this.load.image("alien", "assets/emoji/alien.png");
+    this.load.image("fistbump", "assets/emoji/fistbump.png");
 
     this.load.image("earth", "assets/backgrounds/earth.jpg");
     this.load.image("bgtile", "assets/backgrounds/starsbig.png");
@@ -316,6 +317,36 @@ function create() {
             self.pizza,
             function() {
                 this.socket.emit("pizzaCollected");
+            },
+            null,
+            self
+        );
+    });
+
+    this.socket.on("fistbumpData", function(fistbumpData) {
+        if (self.fistbump) self.fistbump.destroy();
+        self.fistbump = self.physics.add
+            .image(fistbumpData.x, fistbumpData.y, "fistbump")
+            .setDisplaySize(64, 64)
+            .setVelocityX(fistbumpData.vx)
+            .setVelocityY(fistbumpData.vy)
+            .setRotation(fistbumpData.r)
+            .setAngularVelocity(fistbumpData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.fistbump,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("fistbumpMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.fistbump,
+            function() {
+                this.socket.emit("fistbumpCollected");
             },
             null,
             self
