@@ -90,8 +90,8 @@ var peach = {
 var meteroid = {
     x: Math.floor(Math.random() * 2000) + 1700,
     y: Math.floor(Math.random() * 700) + 50,
-    dw: Math.floor(Math.random() * 1000) + 20,
-    dh: Math.floor(Math.random() * 500) + 20,
+    dw: Math.floor(Math.random() * 800) + 50,
+    dh: Math.floor(Math.random() * 800) + 50,
     vx: Math.floor(Math.random() * -100) + -300,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
@@ -101,8 +101,8 @@ var meteroid = {
 var meteroidTwo = {
     x: Math.floor(Math.random() * 2500) + 2000,
     y: Math.floor(Math.random() * 700) + 50,
-    dw: Math.floor(Math.random() * 1000) + 20,
-    dh: Math.floor(Math.random() * 500) + 20,
+    dw: Math.floor(Math.random() * 900) + 100,
+    dh: Math.floor(Math.random() * 900) + 100,
     vx: Math.floor(Math.random() * -100) + -300,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
@@ -112,8 +112,8 @@ var meteroidTwo = {
 var meteroidThree = {
     x: Math.floor(Math.random() * 2500) + 2000,
     y: Math.floor(Math.random() * 700) + 50,
-    dw: Math.floor(Math.random() * 1000) + 20,
-    dh: Math.floor(Math.random() * 500) + 20,
+    dw: Math.floor(Math.random() * 1000) + 150,
+    dh: Math.floor(Math.random() * 800) + 150,
     vx: Math.floor(Math.random() * -100) + -300,
     vy: Math.floor(Math.random() * 50) + -50,
     r: Math.floor(Math.random() * 50) + -50,
@@ -382,8 +382,8 @@ io.on("connection", function(socket) {
     });
 
     socket.on("meteroidReset", function() {
-        meteroid.dw = Math.floor(Math.random() * 1200) + 20;
-        meteroid.dh = Math.floor(Math.random() * 1200) + 20;
+        meteroid.dw = Math.floor(Math.random() * 800) + 50;
+        meteroid.dh = Math.floor(Math.random() * 800) + 50;
         meteroid.vx = Math.floor(Math.random() * -200) + -20;
         meteroid.vy = Math.floor(Math.random() * -2) + 2;
         meteroid.r = Math.floor(Math.random() * 50) + -50;
@@ -403,8 +403,8 @@ io.on("connection", function(socket) {
     });
 
     socket.on("meteroidTwoReset", function() {
-        meteroidTwo.dw = Math.floor(Math.random() * 1200) + 20;
-        meteroidTwo.dh = Math.floor(Math.random() * 1200) + 20;
+        meteroidTwo.dw = Math.floor(Math.random() * 900) + 50;
+        meteroidTwo.dh = Math.floor(Math.random() * 900) + 50;
         meteroidTwo.vx = Math.floor(Math.random() * -300) + -200;
         meteroidTwo.vy = Math.floor(Math.random() * -2) + 2;
         meteroidTwo.r = Math.floor(Math.random() * 50) + -50;
@@ -424,8 +424,8 @@ io.on("connection", function(socket) {
     });
 
     socket.on("meteroidThreeReset", function() {
-        meteroidThree.dw = Math.floor(Math.random() * 1200) + 20;
-        meteroidThree.dh = Math.floor(Math.random() * 1200) + 20;
+        meteroidThree.dw = Math.floor(Math.random() * 1100) + 150;
+        meteroidThree.dh = Math.floor(Math.random() * 900) + 150;
         meteroidThree.vx = Math.floor(Math.random() * -300) + -200;
         meteroidThree.vy = Math.floor(Math.random() * -2) + 2;
         meteroidThree.r = Math.floor(Math.random() * 50) + -50;
