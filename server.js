@@ -5,9 +5,10 @@ var io = require("socket.io").listen(server);
 
 var players = {};
 
-//I will, in the means of time, fix all of this repetetiveteteive code,
-//by creating a set of different speeds which I call on each property,
-//for now, this is a quick-fix.
+//Dear github people, as well as possible employers and code-freaks,
+//I will, in the means of time, fix all of this repetetiveteteive code.
+//Most probabably by creating a set of different attributs, in groups,
+//which I call on each property re-spawn, for now, this is a quick-fix.
 
 var scores = {
     blue: 0,
@@ -21,6 +22,15 @@ var star = {
     vy: Math.floor(Math.random() * 100) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
+};
+
+var alien = {
+    x: Math.floor(Math.random() * 7000) + 6000,
+    y: Math.floor(Math.random() * 650) + 50,
+    vx: Math.floor(Math.random() * -500) + -100,
+    vy: Math.floor(Math.random() * -10) + 10,
+    r: Math.floor(Math.random() * 50) + -50,
+    angv: Math.floor(Math.random() * 145) + 115
 };
 
 var aubergine = {
@@ -189,7 +199,7 @@ io.on("connection", function(socket) {
         star.vy = Math.floor(Math.random() * 100) + -100;
         star.r = Math.floor(Math.random() * 50) + -50;
         star.angv = Math.floor(Math.random() * 150) + 50;
-        io.emit("starLocation", star); //random number here for the new location of the star
+        io.emit("starLocation", star);
     });
 
     socket.on("aubergineCollected", function() {
@@ -204,7 +214,7 @@ io.on("connection", function(socket) {
         aubergine.vx = Math.floor(Math.random() * -100) + -200;
         aubergine.vy = Math.floor(Math.random() * 50) + -50;
         aubergine.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("aubergineData", aubergine); //random number here for the new location of the star
+        io.emit("aubergineData", aubergine);
         io.emit("scoreUpdate", scores);
     });
 
@@ -215,7 +225,7 @@ io.on("connection", function(socket) {
         aubergine.x = Math.floor(Math.random() * 2200) + 2550;
         aubergine.y = Math.floor(Math.random() * 650) + 50;
         aubergine.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("aubergineData", aubergine); //random number here for the new location of the aubergine
+        io.emit("aubergineData", aubergine);
     });
 
     socket.on("poopCollected", function() {
@@ -230,7 +240,7 @@ io.on("connection", function(socket) {
         poop.vy = Math.floor(Math.random() * -10) + 10;
         poop.r = Math.floor(Math.random() * 50) + -50;
         poop.angv = Math.floor(Math.random() * 15) + 5;
-        io.emit("poopData", poop); //random number here for the new location of the star
+        io.emit("poopData", poop);
         io.emit("scoreUpdate", scores);
     });
 
@@ -241,7 +251,7 @@ io.on("connection", function(socket) {
         poop.vy = Math.floor(Math.random() * -10) + 10;
         poop.r = Math.floor(Math.random() * 50) + -50;
         poop.angv = Math.floor(Math.random() * 15) + 5;
-        io.emit("poopData", poop); //random number here for the new location of the poop
+        io.emit("poopData", poop);
     });
 
     socket.on("teslaCollected", function() {
@@ -256,7 +266,7 @@ io.on("connection", function(socket) {
         tesla.x = Math.floor(Math.random() * 6200) + 6550;
         tesla.y = Math.floor(Math.random() * 650) + 50;
         tesla.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("teslaData", tesla); //random number here for the new location of the star
+        io.emit("teslaData", tesla);
         io.emit("scoreUpdate", scores);
     });
 
@@ -267,7 +277,7 @@ io.on("connection", function(socket) {
         tesla.x = Math.floor(Math.random() * 6200) + 6550;
         tesla.y = Math.floor(Math.random() * 650) + 50;
         tesla.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("teslaData", tesla); //random number here for the new location of the tesla
+        io.emit("teslaData", tesla);
     });
 
     socket.on("pizzaCollected", function() {
@@ -282,7 +292,7 @@ io.on("connection", function(socket) {
         pizza.y = Math.floor(Math.random() * 650) + 50;
         pizza.r = Math.floor(Math.random() * 50) + -50;
         pizza.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("pizzaData", pizza); //random number here for the new location of the star
+        io.emit("pizzaData", pizza);
         io.emit("scoreUpdate", scores);
     });
 
@@ -293,7 +303,7 @@ io.on("connection", function(socket) {
         pizza.x = Math.floor(Math.random() * 6200) + 6550;
         pizza.y = Math.floor(Math.random() * 650) + 50;
         pizza.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("pizzaData", pizza); //random number here for the new location of the pizza
+        io.emit("pizzaData", pizza);
     });
 
     socket.on("peachCollected", function() {
@@ -308,7 +318,7 @@ io.on("connection", function(socket) {
         peach.x = Math.floor(Math.random() * 2200) + 2550;
         peach.y = Math.floor(Math.random() * 650) + 50;
         peach.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("peachData", peach); //random number here for the new location of the star
+        io.emit("peachData", peach);
         io.emit("scoreUpdate", scores);
     });
 
@@ -319,7 +329,7 @@ io.on("connection", function(socket) {
         peach.x = Math.floor(Math.random() * 2200) + 2550;
         peach.y = Math.floor(Math.random() * 650) + 50;
         peach.angv = Math.floor(Math.random() * 145) + 115;
-        io.emit("peachData", peach); //random number here for the new location of the peach
+        io.emit("peachData", peach);
     });
 
     socket.on("meteroidCollision", function() {
@@ -338,14 +348,13 @@ io.on("connection", function(socket) {
     socket.on("meteroidReset", function() {
         meteroid.dw = Math.floor(Math.random() * 1200) + 20;
         meteroid.dh = Math.floor(Math.random() * 1200) + 20;
-        // meteroid.dscale = (Math.random() * (1.12 - 0.12) + 0.12).toFixed(2);
         meteroid.vx = Math.floor(Math.random() * -200) + -20;
         meteroid.vy = Math.floor(Math.random() * -2) + 2;
         meteroid.r = Math.floor(Math.random() * 50) + -50;
         meteroid.angv = Math.floor(Math.random() * 5) + 1;
         meteroid.x = Math.floor(Math.random() * 2000) + 1500;
         meteroid.y = Math.floor(Math.random() * 750) + 50;
-        io.emit("meteroidLocation", meteroid); //random number here for the new location of the star
+        io.emit("meteroidLocation", meteroid);
     });
 
     socket.on("meteroidTwoCollision", function() {
@@ -360,14 +369,13 @@ io.on("connection", function(socket) {
     socket.on("meteroidTwoReset", function() {
         meteroidTwo.dw = Math.floor(Math.random() * 1200) + 20;
         meteroidTwo.dh = Math.floor(Math.random() * 1200) + 20;
-        // meteroidTwo.dscale = (Math.random() * (1.12 - 0.12) + 0.12).toFixed(2);
         meteroidTwo.vx = Math.floor(Math.random() * -300) + -200;
         meteroidTwo.vy = Math.floor(Math.random() * -2) + 2;
         meteroidTwo.r = Math.floor(Math.random() * 50) + -50;
         meteroidTwo.angv = Math.floor(Math.random() * 5) + 1;
         meteroidTwo.x = Math.floor(Math.random() * 2500) + 2000;
         meteroidTwo.y = Math.floor(Math.random() * 750) + 50;
-        io.emit("meteroidTwoLocation", meteroidTwo); //random number here for the new location of the star
+        io.emit("meteroidTwoLocation", meteroidTwo);
     });
 
     socket.on("meteroidThreeCollision", function() {
@@ -382,16 +390,13 @@ io.on("connection", function(socket) {
     socket.on("meteroidThreeReset", function() {
         meteroidThree.dw = Math.floor(Math.random() * 1200) + 20;
         meteroidThree.dh = Math.floor(Math.random() * 1200) + 20;
-        // meteroidThree.dscale = (Math.random() * (1.12 - 0.12) + 0.12).toFixed(
-        //     2
-        // );
         meteroidThree.vx = Math.floor(Math.random() * -300) + -200;
         meteroidThree.vy = Math.floor(Math.random() * -2) + 2;
         meteroidThree.r = Math.floor(Math.random() * 50) + -50;
         meteroidThree.angv = Math.floor(Math.random() * 5) + 1;
         meteroidThree.x = Math.floor(Math.random() * 2500) + 3000;
         meteroidThree.y = Math.floor(Math.random() * 750) + 50;
-        io.emit("meteroidThreeLocation", meteroidThree); //random number here for the new location of the star
+        io.emit("meteroidThreeLocation", meteroidThree);
     });
 });
 

@@ -42,11 +42,6 @@ function preload() {
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(490, 350, 320, 50);
 
-    //   this.load.image('logo', 'zenvalogo.png');
-    // for (var i = 0; i < 500; i++) {
-    //     this.load.image('logo'+i, 'zenvalogo.png');
-    // }
-
     this.load.image("ship", "assets/ships/whitelines.png");
     this.load.image("otherPlayer", "assets/ships/whitefull.png");
 
@@ -69,15 +64,6 @@ function preload() {
     this.load.image("catcher", "assets/line.png");
 }
 
-// var bullets;
-//
-// var fireRate = 100;
-// var nextFire = 0;
-//
-// var firebutton;
-
-// var lasers;
-
 function create() {
     this.backgroundEarth = this.add
         .tileSprite(900, 200, 1960, 1600, "earth")
@@ -97,25 +83,6 @@ function create() {
 
     this.catcher = this.physics.add.staticGroup();
     this.catcher.create(-2380, 360, "catcher");
-
-    // this.bullets = this.add.group();
-    // this.bullets.enableBody = true;
-    // this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    //
-    // this.bullets.createMultiple(40, "bullet");
-    // this.bullets.setAll("anchor.x", 0.5);
-    // this.bullets.setAll("anchor.y", 0.5);
-
-    // this.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
-
-    // var particles = this.add.particles("spark");
-    //
-    // var emitter = particles.createEmitter();
-    // emitter.setPosition(6000, 400);
-    // emitter.setScale(0.2);
-    // emitter.setSpeed(200);
-    // // emitter.setVelocityX(-50);
-    // emitter.setBlendMode(Phaser.BlendModes.ADD);
 
     window.addEventListener("resize", resize);
     resize();
@@ -229,6 +196,36 @@ function create() {
             self.aubergine,
             function() {
                 this.socket.emit("aubergineCollected");
+            },
+            null,
+            self
+        );
+    });
+
+    this.socket.on("alienData", function(alienData) {
+        if (self.alien) self.alien.destroy();
+        self.alien = self.physics.add
+            .image(alienData.x, alienData.y, "alien")
+            .setDisplaySize(54, 54)
+            .setVelocityX(alienData.vx)
+            .setVelocityY(alienData.vy)
+            .setRotation(alienData.r)
+            .setAngularVelocity(alienData.angv);
+        self.physics.add.overlap(
+            self.catcher,
+            self.alien,
+            function() {
+                console.log("catcher collision");
+                this.socket.emit("alienMissedAndReset");
+            },
+            null,
+            self
+        );
+        self.physics.add.overlap(
+            self.ship,
+            self.alien,
+            function() {
+                this.socket.emit("alienCollected");
             },
             null,
             self
@@ -360,7 +357,6 @@ function create() {
         var randScale = Math.floor(Math.random() * 5) + 1;
         self.meteroid = self.physics.add
             .image(meteroidData.x, meteroidData.y, "meteroid")
-            // .setScale(meteroidData.dscale)
             .setDisplaySize(meteroidData.dw, meteroidData.dh)
             .setVelocityX(meteroidData.vx)
             .setVelocityY(meteroidData.vy)
@@ -385,14 +381,12 @@ function create() {
             null,
             self
         );
-        // self.physics.add.collider(self.meteroid, self.meteroidTwo);
     });
 
     this.socket.on("meteroidTwoLocation", function(meteroidTwoData) {
         if (self.meteroidTwo) self.meteroidTwo.destroy();
         self.meteroidTwo = self.physics.add
             .image(meteroidTwoData.x, meteroidTwoData.y, "meteroidTwo")
-            // .setScale(meteroidTwoData.dscale)
             .setDisplaySize(meteroidTwoData.dw, meteroidTwoData.dh)
             .setVelocityX(meteroidTwoData.vx)
             .setVelocityY(meteroidTwoData.vy)
@@ -423,7 +417,6 @@ function create() {
         if (self.meteroidThree) self.meteroidThree.destroy();
         self.meteroidThree = self.physics.add
             .image(meteroidThreeData.x, meteroidThreeData.y, "meteroidThree")
-            // .setScale(meteroidThreeData.dscale)
             .setDisplaySize(meteroidThreeData.dw, meteroidThreeData.dh)
             .setVelocityX(meteroidThreeData.vx)
             .setVelocityY(meteroidThreeData.vy)
@@ -451,9 +444,6 @@ function create() {
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    // this.firebutton = this.input.keyboard.addKey(
-    //     Phaser.Input.Keyboard.KeyCodes.SPACE
-    // );
 }
 
 function update() {
@@ -463,10 +453,8 @@ function update() {
     this.backgroundThree.tilePositionX += 4.5;
 
     if (this.ship) {
-        // player movement
         var x = this.ship.x;
         var y = this.ship.y;
-        // var r = this.ship.rotation;
 
         if (this.ship.x < 10) {
             this.ship.x = 10;
@@ -485,13 +473,10 @@ function update() {
         if (
             this.ship.oldPosition &&
             (x !== this.ship.oldPosition.x || y !== this.ship.oldPosition.y)
-            //||
-            //r !== this.ship.oldPosition.rotation
         ) {
             this.socket.emit("playerMovement", {
                 x: this.ship.x,
                 y: this.ship.y
-                // rotation: this.ship.rotation
             });
         }
 
