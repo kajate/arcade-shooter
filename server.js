@@ -19,7 +19,7 @@ var star = {
     x: Math.floor(Math.random() * 2000) + 1200,
     y: Math.floor(Math.random() * 650) + 50,
     vx: Math.floor(Math.random() * -200) + -500,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -27,8 +27,8 @@ var star = {
 var alien = {
     x: Math.floor(Math.random() * 20000) + 15000,
     y: Math.floor(Math.random() * 650) + 50,
-    vx: Math.floor(Math.random() * -1200) + -900,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vx: Math.floor(Math.random() * -1100) + -700,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 10) + -10,
     angv: Math.floor(Math.random() * 10) + 5
 };
@@ -37,7 +37,7 @@ var aubergine = {
     x: Math.floor(Math.random() * 4000) + 3500,
     y: Math.floor(Math.random() * 650) + 50,
     vx: Math.floor(Math.random() * -100) + -300,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -64,7 +64,7 @@ var pizza = {
     x: Math.floor(Math.random() * 6000) + 5500,
     y: Math.floor(Math.random() * 650) + 50,
     vx: Math.floor(Math.random() * -100) + -400,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -82,7 +82,7 @@ var peach = {
     x: Math.floor(Math.random() * 4000) + 3500,
     y: Math.floor(Math.random() * 600) + 100,
     vx: Math.floor(Math.random() * -100) + -300,
-    vy: Math.floor(Math.random() * 10) + -10,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -93,7 +93,7 @@ var meteroid = {
     dw: Math.floor(Math.random() * 800) + 50,
     dh: Math.floor(Math.random() * 800) + 50,
     vx: Math.floor(Math.random() * -100) + -300,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -104,7 +104,7 @@ var meteroidTwo = {
     dw: Math.floor(Math.random() * 900) + 100,
     dh: Math.floor(Math.random() * 900) + 100,
     vx: Math.floor(Math.random() * -100) + -300,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -115,7 +115,7 @@ var meteroidThree = {
     dw: Math.floor(Math.random() * 1000) + 150,
     dh: Math.floor(Math.random() * 800) + 150,
     vx: Math.floor(Math.random() * -100) + -300,
-    vy: Math.floor(Math.random() * 50) + -50,
+    vy: Math.floor(Math.random() * 50) + -100,
     r: Math.floor(Math.random() * 50) + -50,
     angv: Math.floor(Math.random() * 150) + 50
 };
@@ -201,7 +201,7 @@ io.on("connection", function(socket) {
         }
         alien.x = Math.floor(Math.random() * 25000) + 12000;
         alien.y = Math.floor(Math.random() * 600) + 100;
-        alien.vx = Math.floor(Math.random() * -700) + -1200;
+        alien.vx = Math.floor(Math.random() * -700) + -1100;
         alien.vy = Math.floor(Math.random() * 50) + -50;
         alien.r = Math.floor(Math.random() * 10) + -10;
         alien.angv = Math.floor(Math.random() * 10) + 5;
@@ -211,13 +211,13 @@ io.on("connection", function(socket) {
 
     socket.on("alienMissedAndReset", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= alien.vx * -3;
+            scores.blue -= alien.vx * -4;
         } else {
-            scores.red -= alien.vx * -3;
+            scores.red -= alien.vx * -4;
         }
         alien.x = Math.floor(Math.random() * 25000) + 12000;
         alien.y = Math.floor(Math.random() * 600) + 100;
-        alien.vx = Math.floor(Math.random() * -700) + -1200;
+        alien.vx = Math.floor(Math.random() * -700) + -1100;
         alien.vy = Math.floor(Math.random() * 50) + -50;
         alien.r = Math.floor(Math.random() * 10) + -10;
         alien.angv = Math.floor(Math.random() * 10) + 5;
@@ -395,9 +395,9 @@ io.on("connection", function(socket) {
 
     socket.on("meteroidCollision", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= 50;
+            scores.blue -= 10;
         } else {
-            scores.red -= 50;
+            scores.red -= 10;
         }
         io.emit("scoreUpdate", scores);
     });
@@ -416,9 +416,9 @@ io.on("connection", function(socket) {
 
     socket.on("meteroidTwoCollision", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= 100;
+            scores.blue -= 20;
         } else {
-            scores.red -= 100;
+            scores.red -= 20;
         }
         io.emit("scoreUpdate", scores);
     });
@@ -437,9 +437,9 @@ io.on("connection", function(socket) {
 
     socket.on("meteroidThreeCollision", function() {
         if (players[socket.id].team === "blue") {
-            scores.blue -= 150;
+            scores.blue -= 30;
         } else {
-            scores.red -= 150;
+            scores.red -= 30;
         }
         io.emit("scoreUpdate", scores);
     });
