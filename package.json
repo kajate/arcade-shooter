@@ -1,0 +1,25 @@
+{
+    "name": "spiced-social-network",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "engines": {
+        "node": "8.11.1"
+    },
+    "dependencies": {
+        "body-parser": "^1.15.2",
+        "express": "^4.14.0",
+        "http-proxy-middleware": "^0.17.4",
+        "socket-cookie-session": "github:spicedacademy/socket-cookie-session",
+        "socket.io": "^2.1.1",
+        "webpack": "^1.14.0",
+        "webpack-dev-middleware": "^1.8.4"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
