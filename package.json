@@ -1,23 +1,30 @@
 {
-    "name": "never-ending-space",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "engines": {
-        "node": "8.11.1"
-    },
-    "dependencies": {
-        "body-parser": "^1.15.2",
-        "express": "^4.14.0",
-        "http-proxy-middleware": "^0.17.4",
-        "socket-cookie-session": "github:spicedacademy/socket-cookie-session",
-        "socket.io": "^2.1.1"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+  "name": "never-ending-space",
+  "version": "1.0.0",
+  "description": "Multiplayer online game set in space",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kajate/never-ending-space.git"
+  },
+  "keywords": [
+    "Phaser",
+    "Multiplayer",
+    "game",
+    "socket.io"
+  ],
+  "author": "Patrick Gårdinger",
+  "license": "Private",
+  "bugs": {
+    "url": "https://github.com/kajate/never-ending-space"
+  },
+  "homepage": "https://github.com/kajate/never-ending-space",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
+  }
 }
