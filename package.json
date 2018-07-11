@@ -1,5 +1,5 @@
 {
-    "name": "spiced-social-network",
+    "name": "never-ending-space",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -15,9 +15,7 @@
         "express": "^4.14.0",
         "http-proxy-middleware": "^0.17.4",
         "socket-cookie-session": "github:spicedacademy/socket-cookie-session",
-        "socket.io": "^2.1.1",
-        "webpack": "^1.14.0",
-        "webpack-dev-middleware": "^1.8.4"
+        "socket.io": "^2.1.1"
     },
     "keywords": [],
     "author": "",
